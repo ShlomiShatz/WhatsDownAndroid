@@ -5,4 +5,8 @@
     <string name="login_btnLogin">Login</string>
     <string name="main_btnStart">Start</string>
     <string name="main_tvLogo">What\'s Down</string>
+    <string name="login_tvRegistration">Not registered? <u>click here!</u></string>
+    <string name="register_passwordverify">Password Verify</string>
+    <string name="register_displayname">Display Name</string>
+    <string name="register_gotologin">Already registered? click here!</string>
 </resources>

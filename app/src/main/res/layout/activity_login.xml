@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
     android:background="@drawable/background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/login_icon"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/login" />
 
     <LinearLayout
@@ -33,7 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="81dp"
             android:hint="@string/login_etUsername"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="25sp"
+            android:drawableLeft="@mipmap/ic_userinterface"
+            android:drawablePadding="5dp" />
 
         <EditText
             android:id="@+id/login_password"
@@ -41,17 +46,39 @@
             android:layout_height="81dp"
             android:layout_marginTop="16dp"
             android:hint="@string/login_etPassword"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="25sp"
+            android:drawableLeft="@mipmap/ic_padlock"
+            android:drawablePadding="5dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="@string/login_btnLogin"
-            android:textSize="20sp"/>
+            android:backgroundTint="#FFF9C8"
+            android:padding="20dp"
+            app:icon="@drawable/enter"
+            app:iconGravity="end"
+            app:iconPadding="0dp"
+            app:iconSize="50dp"
+            app:iconTint="@color/black" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/login_tvRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#7AFFD815"
+        android:text="@string/login_tvRegistration"
+        android:textColor="#2196F3"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
