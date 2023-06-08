@@ -31,14 +31,14 @@
         <EditText
             android:id="@+id/login_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="81dp"
             android:hint="@string/login_etUsername"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/login_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="81dp"
             android:layout_marginTop="16dp"
             android:hint="@string/login_etPassword"
             android:inputType="textPassword" />
