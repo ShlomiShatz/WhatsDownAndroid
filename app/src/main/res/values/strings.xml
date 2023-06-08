@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">WhatsDown</string>
+    <string name="app_name">What\' sDown</string>
+    <string name="login_etUsername">Username</string>
+    <string name="login_etPassword">Password</string>
+    <string name="login_btnLogin">Login</string>
+    <string name="main_btnStart">Start</string>
+    <string name="main_tvLogo">What\'s Down</string>
 </resources>
