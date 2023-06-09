@@ -8,5 +8,6 @@
     <string name="login_tvRegistration">Not registered? <u>click here!</u></string>
     <string name="register_passwordverify">Password Verify</string>
     <string name="register_displayname">Display Name</string>
-    <string name="register_gotologin">Already registered? click here!</string>
+    <string name="register_gotologin">Already registered? <u>click here!</u></string>
+    <string name="register_uploadimage">Upload Image</string>
 </resources>
