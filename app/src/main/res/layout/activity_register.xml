@@ -77,6 +77,12 @@
                 android:inputType="text"
                 android:textSize="25sp" />
 
+            <ImageView
+                android:id="@+id/register_ivImageUploaded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btnUploadImage"
                 android:layout_width="wrap_content"
@@ -88,12 +94,6 @@
                 android:text="@string/register_uploadimage"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
-
-            <ImageView
-                android:id="@+id/register_ivImageUploaded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btnRegister"
