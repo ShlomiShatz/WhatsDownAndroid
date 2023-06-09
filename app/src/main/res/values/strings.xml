@@ -10,4 +10,6 @@
     <string name="register_displayname">Display Name</string>
     <string name="register_gotologin">Already registered? <u>click here!</u></string>
     <string name="register_uploadimage">Upload Image</string>
+    <string name="register_ivRegisterText">REGISTER</string>
+    <string name="register_ivProfilePicture">PROFILE PICTURE</string>
 </resources>

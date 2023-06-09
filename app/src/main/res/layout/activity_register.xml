@@ -23,7 +23,8 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/signup" />
+            app:srcCompat="@drawable/signup"
+            android:contentDescription="@string/register_ivRegisterText" />
 
 
         <LinearLayout
@@ -38,21 +39,23 @@
                 android:id="@+id/register_etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
-                android:drawableLeft="@mipmap/ic_userinterface"
+                android:drawableStart="@mipmap/ic_userinterface"
                 android:drawablePadding="5dp"
                 android:hint="@string/login_etUsername"
                 android:inputType="text"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:autofillHints="username" />
 
             <EditText
                 android:id="@+id/register_etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
                 android:layout_marginTop="16dp"
-                android:drawableLeft="@mipmap/ic_padlock"
+                android:drawableStart="@mipmap/ic_padlock"
                 android:drawablePadding="5dp"
                 android:hint="@string/login_etPassword"
                 android:inputType="textPassword"
+                android:autofillHints="password"
                 android:textSize="25sp" />
 
             <EditText
@@ -60,10 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
                 android:layout_marginTop="16dp"
-                android:drawableLeft="@mipmap/ic_password"
+                android:drawableStart="@mipmap/ic_password"
                 android:drawablePadding="5dp"
                 android:hint="@string/register_passwordverify"
                 android:inputType="textPassword"
+                android:autofillHints="password"
                 android:textSize="25sp" />
 
             <EditText
@@ -71,17 +75,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
                 android:layout_marginTop="16dp"
-                android:drawableLeft="@mipmap/ic_facedetection"
+                android:drawableStart="@mipmap/ic_facedetection"
                 android:drawablePadding="5dp"
                 android:hint="@string/register_displayname"
                 android:inputType="text"
+                android:autofillHints="name"
                 android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/register_ivImageUploaded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:contentDescription="@string/register_ivProfilePicture"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btnUploadImage"
@@ -93,7 +99,7 @@
                 android:padding="20dp"
                 android:text="@string/register_uploadimage"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btnRegister"
