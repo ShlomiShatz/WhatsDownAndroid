@@ -6,17 +6,24 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private final int GALLERY_REQ_CODE = 1000;
     TextInputLayout username, password, verifyPassword, displayName;
+    ImageView profilePic;
+    MaterialButton btnUpload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.register_etPassword);
         verifyPassword = findViewById(R.id.register_etVerifyPassword);
         displayName = findViewById(R.id.register_etDisplayName);
-
+        profilePic = findViewById(R.id.register_ivImageUploaded);
+        btnUpload = findViewById(R.id.register_btnUploadImage);
 
         TextView tvGotoLogin = findViewById(R.id.register_tvLogin);
         tvGotoLogin.setOnClickListener(v -> {
@@ -34,9 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-        Button btnUploadImage = findViewById(R.id.register_btnUploadImage);
-
-        btnUploadImage.setOnClickListener(v -> {
+        btnUpload.setOnClickListener(v -> {
             Intent iUpload = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(iUpload, 3);
         });
@@ -47,8 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
-            ImageView ivUploadedImage = findViewById(R.id.register_ivImageUploaded);
-            ivUploadedImage.setImageURI(selectedImage);
+            profilePic.setImageURI(selectedImage);
         }
     }
 
@@ -113,11 +118,23 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    private boolean validateImageUploaded() {
+        if(profilePic.getDrawable() == null) {
+            btnUpload.setError("Please upload profile picture.");
+            return false;
+        } else {
+            btnUpload.setError(null);
+            return true;
+        }
+    }
+
     public void onSubmitRegister(View view) {
         boolean usr = validateUsername();
         boolean pwd = validatePassword();
         boolean pwdvrf = validatePasswordVerify();
         boolean dsp = validateDisplayName();
-        if (!usr || !pwd || !pwdvrf || !dsp) return;
+        boolean img = validateImageUploaded();
+        if (!usr || !pwd || !pwdvrf || !dsp || !img) return;
+
     }
 }
