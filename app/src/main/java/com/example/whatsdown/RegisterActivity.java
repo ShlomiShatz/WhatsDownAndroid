@@ -2,28 +2,37 @@ package com.example.whatsdown;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.whatsdown.api.RegisterAPI;
+import com.example.whatsdown.api.RegisterUser;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private final int GALLERY_REQ_CODE = 1000;
     TextInputLayout username, password, verifyPassword, displayName;
     ImageView profilePic;
     MaterialButton btnUpload;
+    Uri selectedImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnUpload = findViewById(R.id.register_btnUploadImage);
 
         TextView tvGotoLogin = findViewById(R.id.register_tvLogin);
-        tvGotoLogin.setOnClickListener(v -> {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-        });
+        tvGotoLogin.setOnClickListener(v -> moveToLogin());
 
         btnUpload.setOnClickListener(v -> {
             Intent iUpload = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -52,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             profilePic.setImageURI(selectedImage);
         }
     }
@@ -121,11 +127,94 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateImageUploaded() {
         if(profilePic.getDrawable() == null) {
             btnUpload.setError("Please upload profile picture.");
+            Toast toast = Toast.makeText(this, "Please upload profile picture.", Toast.LENGTH_SHORT);
+            toast.show();
             return false;
         } else {
             btnUpload.setError(null);
             return true;
         }
+    }
+
+    public String getImageFormatFromUri(Context context, Uri imageUri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        String mimeType = contentResolver.getType(imageUri);
+
+        if (mimeType != null && mimeType.startsWith("image/")) {
+            String fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
+            if (fileExtension != null) {
+                return fileExtension.toLowerCase();
+            }
+        }
+        return null;
+    }
+
+    private String convertImageToBase64() {
+        Drawable drawable = profilePic.getDrawable();
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            byte[] byteArray = null;
+
+            if (bitmap != null) {
+                Uri imageUri = Uri.parse(selectedImage.toString());
+                String fileExtension = getImageFormatFromUri(this, imageUri);
+
+
+                switch (fileExtension) {
+                    case "png": {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byteArray = byteArrayOutputStream.toByteArray();
+                        break;
+                    }
+                    case "jpg":
+                    case "jpeg": {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                        byteArray = byteArrayOutputStream.toByteArray();
+                        break;
+                    }
+                    case "gif":
+                        try {
+                            ContentResolver contentResolver = this.getContentResolver();
+                            InputStream inputStream = contentResolver.openInputStream(selectedImage);
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, bytesRead);
+                            }
+                            outputStream.flush();
+
+                            byteArray = outputStream.toByteArray();
+
+                            inputStream.close();
+                            outputStream.close();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    default:
+                        btnUpload.setError("The file needs to be an image (formats: jpeg/jpg/png/gif)");
+                        Toast toast = Toast.makeText(this,
+                                "The file needs to be an image (formats: jpeg/jpg/png/gif)",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+                }
+            }
+            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        }
+        return null;
+    }
+
+    private void moveToLogin() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 
     public void onSubmitRegister(View view) {
@@ -134,7 +223,40 @@ public class RegisterActivity extends AppCompatActivity {
         boolean pwdvrf = validatePasswordVerify();
         boolean dsp = validateDisplayName();
         boolean img = validateImageUploaded();
-        if (!usr || !pwd || !pwdvrf || !dsp || !img) return;
-
+        if (usr && pwd && pwdvrf && dsp && img) {
+            RegisterUser registerUser = new RegisterUser(username.getEditText().getText().toString(),
+                    password.getEditText().getText().toString(),
+                    displayName.getEditText().getText().toString(), convertImageToBase64());
+            RegisterAPI rApi = new RegisterAPI();
+            rApi.post(registerUser, registered -> {
+                if (registered) {
+                    runOnUiThread(() -> {
+                        username.setError(null);
+                        username.setErrorEnabled(false);
+                        password.setError(null);
+                        password.setErrorEnabled(false);
+                        verifyPassword.setError(null);
+                        verifyPassword.setErrorEnabled(false);
+                        displayName.setError(null);
+                        displayName.setErrorEnabled(false);
+                        Toast toast = Toast.makeText(this,
+                                "Register successful!",
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                        moveToLogin();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        password.setError(null);
+                        password.setErrorEnabled(false);
+                        password.getEditText().setText("");
+                        verifyPassword.setError(null);
+                        verifyPassword.setErrorEnabled(false);
+                        verifyPassword.getEditText().setText("");
+                        username.setError("Username already taken.");
+                    });
+                }
+            });
+        }
     }
 }

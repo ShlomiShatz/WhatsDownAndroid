@@ -124,7 +124,7 @@
                     android:layout_height="match_parent"
                     android:textCursorDrawable="@null"
                     android:textColor="@color/black"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

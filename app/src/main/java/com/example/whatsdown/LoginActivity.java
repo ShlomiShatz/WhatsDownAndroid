@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.whatsdown.api.LoginAPI;
@@ -77,10 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                                     if (registered) {
                                         runOnUiThread(() -> {
                                             CurrentUser curUser = lApi.getCurUser();
+                                            //Go to chats
                                         });
                                     } else {
                                         runOnUiThread(() -> {
-
+                                            password.setError(null);
+                                            password.setErrorEnabled(false);
+                                            password.getEditText().setText("");
+                                            username.setError("Error occurred.");
                                         });
                                     }
                                 }
@@ -90,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             password.setError(null);
                             password.setErrorEnabled(false);
+                            password.getEditText().setText("");
                             username.setError("Wrong username/password.");
                         });
                     }

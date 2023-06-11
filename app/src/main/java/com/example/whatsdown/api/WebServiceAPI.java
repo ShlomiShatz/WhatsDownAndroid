@@ -19,6 +19,9 @@ public interface WebServiceAPI {
     @GET("Users/{username}")
     Call<CurrentUser> getCurrentUser(@Path("username") String username, @Header("Authorization") String token);
 
+    @POST("Users")
+    Call<Void> register(@Body RegisterUser registerUser);
+
     @DELETE("posts/{id}")
     Call<Void> deletePost(@Path("id") int id);
 }
