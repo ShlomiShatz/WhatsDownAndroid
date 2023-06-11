@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.whatsdown.api.LoginAPI;
+import com.example.whatsdown.api.PostCallback;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
@@ -56,6 +58,44 @@ public class LoginActivity extends AppCompatActivity {
     public void onSubmitLogin(View view) {
         boolean usr = validateUsername();
         boolean pwd = validatePassword();
-        if (!usr || !pwd) return;
+        if (usr && pwd) {
+            UserDits userDits = new UserDits(username.getEditText().getText().toString(), password.getEditText().getText().toString());
+            LoginAPI lApi = new LoginAPI();
+            lApi.post(userDits, new PostCallback() {
+                @Override
+                public void onPostComplete(boolean registered) {
+                    if (registered) {
+                        runOnUiThread(() -> {
+                            username.setError(null);
+                            username.setErrorEnabled(false);
+                            password.setError(null);
+                            password.setErrorEnabled(false);
+                            String token = "bearer " + lApi.getToken();
+                            lApi.get(userDits.getUsername(), token, new PostCallback() {
+                                @Override
+                                public void onPostComplete(boolean registered) {
+                                    if (registered) {
+                                        runOnUiThread(() -> {
+                                            CurrentUser curUser = lApi.getCurUser();
+                                        });
+                                    } else {
+                                        runOnUiThread(() -> {
+
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        runOnUiThread(() -> {
+                            password.setError(null);
+                            password.setErrorEnabled(false);
+                            username.setError("Wrong username/password.");
+                        });
+                    }
+                }
+            });
+        }
+
     }
 }
