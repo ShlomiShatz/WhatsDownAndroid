@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -26,6 +27,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import pl.droidsonroids.gif.GifDrawable;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -127,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateImageUploaded() {
         if(profilePic.getDrawable() == null) {
             btnUpload.setError("Please upload profile picture.");
-            Toast toast = Toast.makeText(this, "Please upload profile picture.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please upload profile picture.", Toast.LENGTH_LONG);
             toast.show();
             return false;
         } else {
@@ -151,63 +154,59 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String convertImageToBase64() {
         Drawable drawable = profilePic.getDrawable();
+        byte[] byteArray = null;
+        String type = "";
+        Bitmap bitmap;
+        Uri imageUri = Uri.parse(selectedImage.toString());
+        String fileExtension = getImageFormatFromUri(this, imageUri);
 
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            Bitmap bitmap = bitmapDrawable.getBitmap();
-            byte[] byteArray = null;
-
-            if (bitmap != null) {
-                Uri imageUri = Uri.parse(selectedImage.toString());
-                String fileExtension = getImageFormatFromUri(this, imageUri);
-
-
-                switch (fileExtension) {
-                    case "png": {
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                        byteArray = byteArrayOutputStream.toByteArray();
-                        break;
-                    }
-                    case "jpg":
-                    case "jpeg": {
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                        byteArray = byteArrayOutputStream.toByteArray();
-                        break;
-                    }
-                    case "gif":
-                        try {
-                            ContentResolver contentResolver = this.getContentResolver();
-                            InputStream inputStream = contentResolver.openInputStream(selectedImage);
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-                            byte[] buffer = new byte[4096];
-                            int bytesRead;
-                            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                                outputStream.write(buffer, 0, bytesRead);
-                            }
-                            outputStream.flush();
-
-                            byteArray = outputStream.toByteArray();
-
-                            inputStream.close();
-                            outputStream.close();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default:
-                        btnUpload.setError("The file needs to be an image (formats: jpeg/jpg/png/gif)");
-                        Toast toast = Toast.makeText(this,
-                                "The file needs to be an image (formats: jpeg/jpg/png/gif)",
-                                Toast.LENGTH_LONG);
-                        toast.show();
-                        break;
-                }
+        switch (fileExtension) {
+            case "png": {
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                bitmap = bitmapDrawable.getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byteArray = byteArrayOutputStream.toByteArray();
+                type = "data:image/png;base64,";
+                break;
             }
-            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+            case "jpg":
+            case "jpeg": {
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                bitmap = bitmapDrawable.getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byteArray = byteArrayOutputStream.toByteArray();
+                type = "data:image/jpeg;base64,";
+                break;
+            }
+            case "gif":
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                drawable.draw(canvas);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                byteArray = outputStream.toByteArray();
+                type = "data:image/gif;base64,";
+                try {
+                    outputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                btnUpload.setError("The file needs to be an image (formats: jpeg/jpg/png/gif)");
+                Toast toast = Toast.makeText(this,
+                        "The file needs to be an image (formats: jpeg/jpg/png/gif)",
+                        Toast.LENGTH_LONG);
+                toast.show();
+                break;
+        }
+        if (byteArray != null) {
+            String encoding = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            encoding = type + encoding;
+            return encoding;
         }
         return null;
     }
@@ -224,9 +223,13 @@ public class RegisterActivity extends AppCompatActivity {
         boolean dsp = validateDisplayName();
         boolean img = validateImageUploaded();
         if (usr && pwd && pwdvrf && dsp && img) {
+            String image64 = convertImageToBase64();
+            if (image64 == null) {
+                return;
+            }
             RegisterUser registerUser = new RegisterUser(username.getEditText().getText().toString(),
                     password.getEditText().getText().toString(),
-                    displayName.getEditText().getText().toString(), convertImageToBase64());
+                    displayName.getEditText().getText().toString(), image64);
             RegisterAPI rApi = new RegisterAPI();
             rApi.post(registerUser, registered -> {
                 if (registered) {
@@ -241,7 +244,7 @@ public class RegisterActivity extends AppCompatActivity {
                         displayName.setErrorEnabled(false);
                         Toast toast = Toast.makeText(this,
                                 "Register successful!",
-                                Toast.LENGTH_SHORT);
+                                Toast.LENGTH_LONG);
                         toast.show();
                         moveToLogin();
                     });
