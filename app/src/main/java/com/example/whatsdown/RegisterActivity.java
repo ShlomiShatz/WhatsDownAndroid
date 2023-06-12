@@ -25,10 +25,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import pl.droidsonroids.gif.GifDrawable;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -65,8 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
             profilePic.setImageURI(selectedImage);
         }
     }
-
-
 
     private boolean validateUsername() {
         String regExp = "^[A-Za-z0-9]*$";
