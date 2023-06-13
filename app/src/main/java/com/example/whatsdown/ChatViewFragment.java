@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.whatsdown.adapters.ConstactsListAdapter;
+import com.example.whatsdown.adapters.MessagesListAdapter;
+import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ChatViewFragment extends Fragment {
 
     View view;
     private ChatViewModel viewModel;
+    private MessageViewModel messageViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,6 +31,13 @@ public class ChatViewFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         ImageButton back = (ImageButton)view.findViewById(R.id.back);
         back.setOnClickListener(v -> viewModel.setChatId(""));
+        RecyclerView listMessages = view.findViewById(R.id.allMsg);
+        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this);
+        listMessages.setAdapter(messagesListAdapter);
+        listMessages.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
+        messageViewModel.get().observe(getViewLifecycleOwner() , messages -> messagesListAdapter.setMessages(messages));
 
         String chatId = viewModel.getChatId().toString();
 
