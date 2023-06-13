@@ -54,8 +54,8 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
         }
     }
 
-    public void setContacts(List<Contact> contacts){
-        contacts = contacts;
+    public void setContacts(List<Contact> listContacts){
+        contacts = listContacts;
         notifyDataSetChanged();
     }
 

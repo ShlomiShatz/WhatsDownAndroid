@@ -36,6 +36,8 @@ public class ContactListFragment extends Fragment {
 
 
 
+
+
         return view;
     }
 
