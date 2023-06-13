@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -20,11 +21,10 @@ public class ChatViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_chat_view, container, false);
-        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        Button back = view.findViewById(R.id.back);
-        back.setOnClickListener(v -> viewModel.setChatId(null));
+        viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        ImageButton back = (ImageButton)view.findViewById(R.id.back);
+        back.setOnClickListener(v -> viewModel.setChatId(""));
 
         String chatId = viewModel.getChatId().toString();
 
@@ -32,7 +32,7 @@ public class ChatViewFragment extends Fragment {
 
         //put in the right place in the fragment
 
-        Button send = view.findViewById(R.id.send);
+        ImageButton send = (ImageButton)view.findViewById(R.id.send);
         send.setOnClickListener(v -> {
             TextInputLayout input = view.findViewById(R.id.userMsgInput);
             String msg = "";

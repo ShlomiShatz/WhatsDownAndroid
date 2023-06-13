@@ -19,13 +19,14 @@ public class ChatActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         viewModel.getChatId().observe(this, chat -> {
-            if (chat == null){
+            if (chat == ""){
                 changeFragment(new ContactListFragment());
             } else {
                 changeFragment(new ChatViewFragment());
             }
         });
         changeFragment(new ContactListFragment());
+//        changeFragment(new ChatViewFragment());
     }
 
     private void changeFragment(Fragment fragment) {

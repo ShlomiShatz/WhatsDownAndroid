@@ -3,11 +3,14 @@ package com.example.whatsdown.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.whatsdown.ChatViewModel;
 import com.example.whatsdown.Contact;
 import com.example.whatsdown.ContactListFragment;
 import com.example.whatsdown.R;
@@ -15,12 +18,22 @@ import com.example.whatsdown.R;
 import java.util.List;
 
 public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdapter.ContactViewHolder> {
+    //can i use this
+    private OnItemClickListener onItemClickListener;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
     class ContactViewHolder extends  RecyclerView.ViewHolder {
         private final TextView contactName;
         private final TextView lastMsg;
         private final TextView time;
         private final ImageView contactImg;
+
 
         private  ContactViewHolder(View itemView){
             super(itemView);
@@ -28,6 +41,17 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
             lastMsg = itemView.findViewById(R.id.lastMessage);
             time = itemView.findViewById(R.id.time);
             contactImg = itemView.findViewById(R.id.imageContact);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    if (onItemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -52,6 +76,7 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
             holder.time.setText(current.getWhenLastMessage());
             holder.contactImg.setImageResource(current.getProfileImage());
         }
+
     }
 
     public void setContacts(List<Contact> listContacts){

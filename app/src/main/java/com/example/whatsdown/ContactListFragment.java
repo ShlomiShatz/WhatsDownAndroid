@@ -21,14 +21,22 @@ import java.util.List;
 
 public class ContactListFragment extends Fragment {
     View view;
+    private ChatViewModel viewModel;
     private ContactViewModel contactViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_contact_list, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
         final ConstactsListAdapter adapter = new ConstactsListAdapter(this);
+        adapter.setOnItemClickListener(new ConstactsListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                viewModel.setChatId("55555");
+            }
+        });
         listContacts.setAdapter(adapter);
         listContacts.setLayoutManager(new LinearLayoutManager(this.getContext()));
         contactViewModel = new ViewModelProvider(requireActivity()).get(ContactViewModel.class);
