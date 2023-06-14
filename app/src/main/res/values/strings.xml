@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">WhatsDown</string>
+    <string name="app_name">What\' sDown</string>
+    <string name="login_etUsername">Username</string>
+    <string name="login_etPassword">Password</string>
+    <string name="login_btnLogin">Login</string>
+    <string name="main_btnStart">Start</string>
+    <string name="main_tvLogo">What\'s Down</string>
+    <string name="login_tvRegistration">Not registered? <u>click here!</u></string>
+    <string name="register_passwordverify">Password Verify</string>
+    <string name="register_displayname">Display Name</string>
+    <string name="register_gotologin">Already registered? <u>click here!</u></string>
+    <string name="register_uploadimage">Upload Image</string>
+    <string name="register_ivRegisterText">REGISTER</string>
+    <string name="register_ivProfilePicture">PROFILE PICTURE</string>
 </resources>
