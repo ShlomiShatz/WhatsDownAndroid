@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="userName">userName</string>
+    <string name="setting">setting</string>
+    <string name="user_account_image">userAccountImage</string>
+    <string name="back">back</string>
+    <string name="send">send</string>
+    <string name="enter_text">enter text</string>
+    <string name="sender">sender</string>
+    <string name="content">content</string>
+    <string name="time">time</string>
+</resources>
