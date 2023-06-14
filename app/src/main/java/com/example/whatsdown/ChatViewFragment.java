@@ -18,11 +18,12 @@ import com.example.whatsdown.adapters.MessagesListAdapter;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class ChatViewFragment extends Fragment {
+public class ChatViewFragment extends Fragment{
 
     View view;
     private ChatViewModel viewModel;
     private MessageViewModel messageViewModel;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
