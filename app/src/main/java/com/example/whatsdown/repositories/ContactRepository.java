@@ -29,15 +29,15 @@ public class ContactRepository {
         public ContactListData() {
             //super();
 
-            //need to delete
+            //need to delete**************************************************************
             List<Contact> contacts = new LinkedList<>();
-            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-            setValue(contacts);
-            //until here
+//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
+//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
+//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
+//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
+//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
+//            setValue(contacts);
+            //until here*********************************************************************
 
             //setValue(new LinkedList<>());
         }

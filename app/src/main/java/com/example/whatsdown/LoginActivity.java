@@ -56,6 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void goToChats(CurrentUser user) {
+        Intent i = new Intent(this, ChatActivity.class);
+        i.putExtra("CurrentUser", user);
+        startActivity(i);
+    }
+
     public void onSubmitLogin(View view) {
         boolean usr = validateUsername();
         boolean pwd = validatePassword();
@@ -78,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (registered) {
                                         runOnUiThread(() -> {
                                             CurrentUser curUser = lApi.getCurUser();
-                                            //Go to chats
+                                            goToChats(curUser);
                                         });
                                     } else {
                                         runOnUiThread(() -> {

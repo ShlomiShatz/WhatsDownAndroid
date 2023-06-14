@@ -71,10 +71,10 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
     public void onBindViewHolder(ContactViewHolder holder, int position){
         if (contacts != null){
             final Contact current = contacts.get(position);
-            holder.contactName.setText(current.getName());
-            holder.lastMsg.setText(current.getLastMessage());
-            holder.time.setText(current.getWhenLastMessage());
-            holder.contactImg.setImageResource(current.getProfileImage());
+            holder.contactName.setText(current.getUser().getDisplayName());
+            holder.lastMsg.setText(current.getLastMessage().getContent());
+            holder.time.setText(current.getLastMessage().getCreated());
+            holder.contactImg.setImageBitmap(current.getUser().getProfilePic());
         }
 
     }

@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsdown.ChatViewFragment;
-import com.example.whatsdown.ChatViewModel;
-import com.example.whatsdown.ContactListFragment;
 import com.example.whatsdown.Message;
 import com.example.whatsdown.R;
 
@@ -50,7 +48,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
             final Message current = messages.get(position);
             holder.sender.setText(current.getSender());
             holder.content.setText(current.getContent());
-            holder.time.setText(current.getTime());
+            holder.time.setText(current.getCreated());
         }
 
     }
