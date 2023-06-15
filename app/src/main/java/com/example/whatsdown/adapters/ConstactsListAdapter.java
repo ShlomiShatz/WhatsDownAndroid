@@ -35,7 +35,7 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
         private final ImageView contactImg;
 
 
-        private  ContactViewHolder(View itemView){
+        private ContactViewHolder(View itemView){
             super(itemView);
             contactName = itemView.findViewById(R.id.nameContact);
             lastMsg = itemView.findViewById(R.id.lastMessage);
@@ -71,6 +71,7 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
     public void onBindViewHolder(ContactViewHolder holder, int position){
         if (contacts != null){
             final Contact current = contacts.get(position);
+
             holder.contactName.setText(current.getUser().getDisplayName());
             holder.lastMsg.setText(current.getLastMessage().getContent());
             holder.time.setText(current.getLastMessage().getCreated());

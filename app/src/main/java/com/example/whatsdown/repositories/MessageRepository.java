@@ -14,7 +14,7 @@ public class MessageRepository {
 
     private MessageRepository.MessageListData messageListData;
     //private ContactDao contactDao;
-    //private ContactAPI contactAPI;
+    //private ChatsAPI ChatsAPI;
 
 
     public MessageRepository(){
@@ -63,11 +63,11 @@ public class MessageRepository {
     }
 
     public void add(final Message message){
-        //contactAPI.add(message);
+        //ChatsAPI.add(message);
     }
 
     public void delete(final Message message){
-        //contactAPI.delete(message);
+        //ChatsAPI.delete(message);
     }
 
     public void reload(){

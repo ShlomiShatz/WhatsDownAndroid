@@ -16,10 +16,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
-    String token;
+    static String token;
     CurrentUser curUser;
 
-    public String getToken() {
+    public static String getToken() {
         return token;
     }
 
@@ -37,7 +37,7 @@ public class LoginAPI {
         // TILL HERE*************************************************************
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl("http://192.168.1.19:5000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();
@@ -50,7 +50,7 @@ public class LoginAPI {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.code() == 200) {
-                    token = response.body();
+                    token = "bearer " + response.body();
                     callback.onPostComplete(true);
                 } else {
                     callback.onPostComplete(false);

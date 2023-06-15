@@ -4,7 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.whatsdown.Contact;
+import com.example.whatsdown.CurrentUser;
 import com.example.whatsdown.R;
+import com.example.whatsdown.api.ChatsAPI;
+import com.example.whatsdown.api.LoginAPI;
+import com.example.whatsdown.api.PostCallback;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,34 +16,42 @@ import java.util.List;
 
 public class ContactRepository {
     private ContactListData contactListData;
-    //private ContactDao contactDao;
-    //private ContactAPI contactAPI;
+    //    private ContactDao contactDao;
+    private List<Contact> list;
+    private ChatsAPI chatsAPI;
+    private String token;
 
 
     public ContactRepository(){
         //LocalDatabase db = LocalDatabase.getInstance();
         //contactDao = db.contactDao();
+        chatsAPI = new ChatsAPI();
+        token = LoginAPI.getToken();
         contactListData = new ContactListData();
-        //contactAPI = new ContactAPI(contactListData, contactDao);
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             //super();
-
-            //need to delete**************************************************************
-            List<Contact> contacts = new LinkedList<>();
-//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-//            contacts.add(new Contact("aaaa", "15:41", R.drawable.penguin, "hii"));
-//            setValue(contacts);
-            //until here*********************************************************************
-
-            //setValue(new LinkedList<>());
+            chatsAPI.get(token, new PostCallback() {
+                @Override
+                public void onPostComplete(boolean registered) {
+                    if (registered) {
+                        if (chatsAPI.getList().size() > 0) {
+                            list = chatsAPI.getList();
+                            setValue(list);
+                        }
+                    } else {
+                        setValue(new LinkedList<>());
+                    }
+                }
+            });
+            setValue(list);
         }
 
         @Override
@@ -53,21 +65,31 @@ public class ContactRepository {
         }
     }
 
-        public LiveData<List<Contact>> getAll(){
-            return contactListData;
-        }
+    public LiveData<List<Contact>> getAll(){
+        return contactListData;
+    }
 
-        public void add(final Contact contact){
-            //contactAPI.add(contact);
-         }
+    public void add(String username){
+        chatsAPI.add(token, username, new PostCallback() {
+            @Override
+            public void onPostComplete(boolean registered) {
+                if (registered) {
+                    reload();
+                } else {
+                    //error
+                }
+            }
+        });
+    }
 
-         public void delete(final Contact contact){
-             //contactAPI.delete(contact);
-         }
+    public void delete(final Contact contact){
+        //chatsAPI.delete(contact);
+    }
 
-         public void reload(){
-             //contactAPI.get();
-         }
+    public void reload(){
+//             chatsAPI.get();
+
+    }
 
 
 

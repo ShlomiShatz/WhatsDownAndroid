@@ -13,22 +13,30 @@ public class ChatActivity extends AppCompatActivity {
 
     private ChatViewModel viewModel;
     private CurrentUser currentUser;
+    private String token;
+    private ContactViewModel contactViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         currentUser = (CurrentUser) i.getSerializableExtra("CurrentUser");
+        token = i.getStringExtra("Token");
         setContentView(R.layout.activity_chat);
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        viewModel.setToken(token);
+
+        contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+        contactViewModel.setToken(token);
+
         viewModel.getChatId().observe(this, chat -> {
             if (chat == ""){
-                changeFragment(new ContactListFragment(currentUser));
+                changeFragment(new ContactListFragment(currentUser, token));
             } else {
                 changeFragment(new ChatViewFragment());
             }
         });
-        changeFragment(new ContactListFragment(currentUser));
+        changeFragment(new ContactListFragment(currentUser, token));
 //        changeFragment(new ChatViewFragment());
     }
 

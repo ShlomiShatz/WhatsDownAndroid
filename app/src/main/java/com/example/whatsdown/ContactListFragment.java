@@ -1,7 +1,5 @@
 package com.example.whatsdown;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,29 +7,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.whatsdown.adapters.ConstactsListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ContactListFragment extends Fragment {
     View view;
     CurrentUser currentUser;
     private ChatViewModel viewModel;
     private ContactViewModel contactViewModel;
+    private String token;
 
-    public ContactListFragment(CurrentUser currentUser) {
+    public ContactListFragment(CurrentUser currentUser, String token) {
         this.currentUser = currentUser;
+        this.token = token;
     }
 
     @Override
@@ -44,22 +37,19 @@ public class ContactListFragment extends Fragment {
         ImageView im = view.findViewById(R.id.contact_list_image);
         im.setImageBitmap(currentUser.getProfilePic());
         viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        viewModel.setToken(token);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
         final ConstactsListAdapter adapter = new ConstactsListAdapter(this);
         adapter.setOnItemClickListener(new ConstactsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                viewModel.setChatId("55555");
+                viewModel.setChatId(adapter.getContacts().get(position).getId());
             }
         });
         listContacts.setAdapter(adapter);
         listContacts.setLayoutManager(new LinearLayoutManager(this.getContext()));
         contactViewModel = new ViewModelProvider(requireActivity()).get(ContactViewModel.class);
         contactViewModel.get().observe(getViewLifecycleOwner() , contacts -> adapter.setContacts(contacts));
-
-
-
-
 
         return view;
     }
