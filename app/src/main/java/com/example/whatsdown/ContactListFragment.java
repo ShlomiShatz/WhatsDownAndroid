@@ -68,13 +68,15 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
     public boolean onMenuItemClick(MenuItem item){
         int itemId = item.getItemId();
         if (itemId == R.id.addContact_menu) {
-            Toast.makeText(this.getContext(), "add contact", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(requireActivity(), AddContactActivity.class);
+            startActivity(i);
             return true;
         } else if (itemId == R.id.logout_menu) {
             requireActivity().finish();
             return true;
         } else if (itemId == R.id.setting_menu) {
-            Toast.makeText(this.getContext(), "setting", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(requireActivity(), SettingActivity.class);
+            startActivity(i);
             return true;
         } else {
             return false;
