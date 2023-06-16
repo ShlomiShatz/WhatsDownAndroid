@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import com.example.whatsdown.adapters.ConstactsListAdapter;
 import com.example.whatsdown.adapters.MessagesListAdapter;
 import com.example.whatsdown.view_model.MessageViewModel;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ChatViewFragment extends Fragment {
@@ -47,15 +48,15 @@ public class ChatViewFragment extends Fragment {
 
         ImageButton send = (ImageButton)view.findViewById(R.id.send);
         send.setOnClickListener(v -> {
-            TextInputLayout input = view.findViewById(R.id.userMsgInput);
+            TextInputEditText input = view.findViewById(R.id.userMsgInput);
             String msg = "";
-            if (input.getEditText() != null){
-                msg = input.getEditText().getText().toString().trim();
+            if (input != null){
+                msg = input.getText().toString().trim();
             }
             if (!msg.isEmpty()){
-                input.getEditText().setText("");
+                input.setText("");
             }
-            //add massage to the chat
+
         });
 
         return view;

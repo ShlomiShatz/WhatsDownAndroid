@@ -3,9 +3,11 @@ package com.example.whatsdown.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.Contact;
+import com.example.whatsdown.ChatViewModel;
 import com.example.whatsdown.Message;
-import com.example.whatsdown.R;
+import com.example.whatsdown.api.ChatsAPI;
+import com.example.whatsdown.api.LoginAPI;
+import com.example.whatsdown.api.PostCallback;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +16,8 @@ public class MessageRepository {
 
     private MessageRepository.MessageListData messageListData;
     //private ContactDao contactDao;
-    //private ChatsAPI ChatsAPI;
+    private ChatsAPI chatsAPI;
+    List<Message> messages;
 
 
     public MessageRepository(){
@@ -29,22 +32,21 @@ public class MessageRepository {
     class MessageListData extends MutableLiveData<List<Message>> {
         public MessageListData() {
             //super();
+            messages = new LinkedList<>();
+            chatsAPI = new ChatsAPI();
+            chatsAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new PostCallback() {
+                @Override
+                public void onPostComplete(boolean registered) {
+                    if (registered) {
+                        messages = chatsAPI.getMessageList();
+                        setValue(messages);
+                    } else {
+                        //Error
+                    }
+                }
+            });
 
-            //need to delete
-            List<Message> messages = new LinkedList<>();
 
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            messages.add(new Message("aaaa","hii", "15:41"));
-            setValue(messages);
-            //until here
-
-            //setValue(new LinkedList<>());
         }
 
         @Override
@@ -63,7 +65,17 @@ public class MessageRepository {
     }
 
     public void add(final Message message){
-        //ChatsAPI.add(message);
+        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), message.getContent(), new PostCallback() {
+            @Override
+            public void onPostComplete(boolean registered) {
+                if (registered) {
+
+                } else {
+                    //Error
+
+                }
+            }
+        });
     }
 
     public void delete(final Message message){
@@ -71,6 +83,16 @@ public class MessageRepository {
     }
 
     public void reload(){
-        //messageAPI.get();
+        chatsAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new PostCallback() {
+            @Override
+            public void onPostComplete(boolean registered) {
+                if (registered) {
+                    messages = chatsAPI.getMessageList();
+                } else {
+                    //Error
+
+                }
+            }
+        });
     }
 }

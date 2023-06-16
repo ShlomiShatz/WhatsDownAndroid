@@ -2,6 +2,7 @@ package com.example.whatsdown.api;
 
 import com.example.whatsdown.Contact;
 import com.example.whatsdown.CurrentUser;
+import com.example.whatsdown.Message;
 import com.example.whatsdown.repositories.ContactRepository;
 
 import java.util.List;
@@ -18,9 +19,14 @@ public class ChatsAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
     List<Contact> list;
+    List<Message> messageList;
 
     public List<Contact> getList() {
         return list;
+    }
+
+    public List<Message> getMessageList() {
+        return messageList;
     }
 
     public ChatsAPI() {
@@ -33,7 +39,7 @@ public class ChatsAPI {
         // TILL HERE*************************************************************
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.19:5000/api/")
+                .baseUrl("http://10.0.2.2:5000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();
@@ -80,4 +86,46 @@ public class ChatsAPI {
             }
         });
     }
+
+    public void getMessages(String id, String tokenToSend, PostCallback callback) {
+        Call<List<Message>> call = webServiceAPI.getMessages(id, tokenToSend);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                if(response.code() == 200) {
+                    messageList = response.body();
+                    callback.onPostComplete(true);
+                } else {
+                    callback.onPostComplete(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+                t.printStackTrace();
+                callback.onPostComplete(false);
+            }
+        });
+    }
+
+    public void sendMessage(String id, String tokenToSend, String msg, PostCallback callback) {
+        Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 200) {
+                    callback.onPostComplete(true);
+                } else {
+                    callback.onPostComplete(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+                callback.onPostComplete(false);
+            }
+        });
+    }
+
 }

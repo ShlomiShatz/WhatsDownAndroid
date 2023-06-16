@@ -7,8 +7,14 @@ import androidx.lifecycle.ViewModel;
 public class ChatViewModel extends ViewModel {
     private final MutableLiveData<String> chatId = new MutableLiveData<String>();
     private MutableLiveData<String> tokenLiveData = new MutableLiveData<String>();
+    static String chatIdString;
+
+    public static String getChatIdString() {
+        return chatIdString;
+    }
 
     public void setChatId(String id){
+        chatIdString = id;
         chatId.setValue((id));
     }
 

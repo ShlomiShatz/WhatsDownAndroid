@@ -27,7 +27,6 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
             content = itemView.findViewById(R.id.content);
             time = itemView.findViewById(R.id.time);
         }
-
     }
     private final LayoutInflater mInflater;
     private List<Message> messages;
@@ -46,7 +45,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     public void onBindViewHolder(MessageViewHolder holder, int position){
         if (messages != null){
             final Message current = messages.get(position);
-            holder.sender.setText(current.getSender());
+            holder.sender.setText(current.getSender().getDisplayName());
             holder.content.setText(current.getContent());
             holder.time.setText(current.getCreated());
         }
