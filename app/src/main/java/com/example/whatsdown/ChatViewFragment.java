@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.whatsdown.adapters.ConstactsListAdapter;
 import com.example.whatsdown.adapters.MessagesListAdapter;
@@ -39,8 +41,12 @@ public class ChatViewFragment extends Fragment {
 
         messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
         messageViewModel.get().observe(getViewLifecycleOwner() , messages -> messagesListAdapter.setMessages(messages));
-
+        ImageView img = view.findViewById(R.id.imgUser_chatView);
+        img.setImageBitmap(viewModel.getCurrentUser().getProfilePic());
+        TextView name = view.findViewById(R.id.username_chatView);
+        name.setText(viewModel.getCurrentUser().getDisplayName());
         String chatId = viewModel.getChatId().toString();
+
 
         //get all massages
 
