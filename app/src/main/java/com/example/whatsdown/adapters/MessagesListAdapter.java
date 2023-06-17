@@ -13,45 +13,82 @@ import com.example.whatsdown.R;
 
 import java.util.List;
 
-public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapter.MessageViewHolder>{
+public class MessagesListAdapter extends RecyclerView.Adapter {
 
 
-    class MessageViewHolder extends  RecyclerView.ViewHolder {
+    class ReceiveViewHolder extends RecyclerView.ViewHolder {
         private final TextView sender;
         private final TextView content;
         private final TextView time;
 
-        private MessageViewHolder(View itemView){
+        private ReceiveViewHolder(View itemView) {
             super(itemView);
             sender = itemView.findViewById(R.id.sender);
             content = itemView.findViewById(R.id.content);
             time = itemView.findViewById(R.id.time);
         }
     }
+
+    class SenderViewHolder extends RecyclerView.ViewHolder {
+        private final TextView sender;
+        private final TextView content;
+        private final TextView time;
+
+        private SenderViewHolder(View itemView) {
+            super(itemView);
+            sender = itemView.findViewById(R.id.sender_right);
+            content = itemView.findViewById(R.id.content_right);
+            time = itemView.findViewById(R.id.time_right);
+        }
+    }
+
     private final LayoutInflater mInflater;
     private List<Message> messages;
 
-    public MessagesListAdapter(ChatViewFragment context) {
+    private String sendUser;
+
+    int sender_type = 1;
+    int receiver_type = 2;
+
+    public MessagesListAdapter(ChatViewFragment context, String sender) {
         mInflater = LayoutInflater.from(context.getContext());
+        sendUser = sender;
     }
 
     @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View itemView = mInflater.inflate(R.layout.message_box_layout, parent, false);
-        return new MessageViewHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView;
+        if (viewType == receiver_type) {
+            itemView = mInflater.inflate(R.layout.message_box_layout, parent, false);
+            return new ReceiveViewHolder(itemView);
+        } else {
+            itemView = mInflater.inflate(R.layout.message_box_layout_right, parent, false);
+            return new SenderViewHolder(itemView);
+        }
     }
 
     @Override
-    public void onBindViewHolder(MessageViewHolder holder, int position){
-        if (messages != null){
-            final Message current = messages.get(position);
-            holder.sender.setText(current.getSender().getDisplayName());
-            holder.content.setText(current.getContent());
-            holder.time.setText(current.getCreated());
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder.getClass() == SenderViewHolder.class) {
+            if (messages != null) {
+                final Message current = messages.get(position);
+                ((SenderViewHolder) holder).sender.setText(current.getSender().getDisplayName());
+                ((SenderViewHolder) holder).content.setText(current.getContent());
+                ((SenderViewHolder) holder).time.setText(current.getCreated());
+            }
         }
 
+        if (holder.getClass() == ReceiveViewHolder.class) {
+            if (messages != null) {
+                final Message current = messages.get(position);
+                ((ReceiveViewHolder) holder).sender.setText(current.getSender().getDisplayName());
+                ((ReceiveViewHolder) holder).content.setText(current.getContent());
+                ((ReceiveViewHolder) holder).time.setText(current.getCreated());
+            }
+        }
     }
-    public void setMessages(List<Message> listMessages){
+
+    public void setMessages(List<Message> listMessages) {
         messages = listMessages;
         notifyDataSetChanged();
     }
@@ -59,6 +96,11 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     public List<Message> getMessages() {
         return messages;
     }
+
+    public void setSendUser(String sendUser) {
+        this.sendUser = sendUser;
+    }
+
     @Override
     public int getItemCount() {
         if (messages != null)
@@ -66,4 +108,11 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         else return 0;
     }
 
+    public int getItemViewType(int position) {
+        if (messages.get(position).getSender().getDisplayName().equals(sendUser)) {
+            return sender_type;
+        } else {
+            return receiver_type;
+        }
+    }
 }

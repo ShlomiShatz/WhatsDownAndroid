@@ -65,7 +65,7 @@ public class MessageRepository {
     }
 
     public void add(final Message message){
-        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), message.getContent(), new PostCallback() {
+        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), message, new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
                 if (registered) {

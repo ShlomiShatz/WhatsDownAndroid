@@ -12,9 +12,13 @@ import android.os.Bundle;
 public class ChatActivity extends AppCompatActivity {
 
     private ChatViewModel viewModel;
-    private CurrentUser currentUser;
+    private static CurrentUser currentUser;
     private String token;
     private ContactViewModel contactViewModel;
+
+    public static CurrentUser getCurrentUser() {
+        return currentUser;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

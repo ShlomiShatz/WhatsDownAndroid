@@ -15,9 +15,12 @@ import android.widget.ImageButton;
 
 import com.example.whatsdown.adapters.ConstactsListAdapter;
 import com.example.whatsdown.adapters.MessagesListAdapter;
+import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Calendar;
 
 public class ChatViewFragment extends Fragment {
 
@@ -33,7 +36,7 @@ public class ChatViewFragment extends Fragment {
         ImageButton back = (ImageButton)view.findViewById(R.id.back);
         back.setOnClickListener(v -> viewModel.setChatId(""));
         RecyclerView listMessages = view.findViewById(R.id.allMsg);
-        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this);
+        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this,viewModel.getCurrentUser().getDisplayName());
         listMessages.setAdapter(messagesListAdapter);
         listMessages.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -54,9 +57,10 @@ public class ChatViewFragment extends Fragment {
                 msg = input.getText().toString().trim();
             }
             if (!msg.isEmpty()){
+                Message message = new Message(ChatViewModel.getChatIdString(), ChatActivity.getCurrentUser(), msg, Calendar.getInstance().getTime().toString());
+                messageViewModel.add(message);
                 input.setText("");
             }
-
         });
 
         return view;

@@ -108,8 +108,8 @@ public class ChatsAPI {
         });
     }
 
-    public void sendMessage(String id, String tokenToSend, String msg, PostCallback callback) {
-        Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg);
+    public void sendMessage(String id, String tokenToSend, Message msg, PostCallback callback) {
+        Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg.getSender().getUsername());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
