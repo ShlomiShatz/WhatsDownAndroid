@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ContactListFragment">
 
     <LinearLayout
@@ -55,13 +56,15 @@
 <!--            android:layout_height="match_parent"-->
 <!--            />-->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/refreshLayout">
+            android:background="#68FFFFFF">
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contacts"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/contacts"/>
+                android:layout_height="match_parent" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
