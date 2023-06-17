@@ -44,6 +44,7 @@ public class ContactListFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 viewModel.setChatId(adapter.getContacts().get(position).getId());
+                viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());
             }
         });
         listContacts.setAdapter(adapter);

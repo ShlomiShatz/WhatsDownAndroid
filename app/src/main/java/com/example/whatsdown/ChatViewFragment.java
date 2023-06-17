@@ -33,7 +33,7 @@ public class ChatViewFragment extends Fragment {
         ImageButton back = (ImageButton)view.findViewById(R.id.back);
         back.setOnClickListener(v -> viewModel.setChatId(""));
         RecyclerView listMessages = view.findViewById(R.id.allMsg);
-        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this);
+        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this,viewModel.getCurrentUser().getDisplayName());
         listMessages.setAdapter(messagesListAdapter);
         listMessages.setLayoutManager(new LinearLayoutManager(this.getContext()));
 

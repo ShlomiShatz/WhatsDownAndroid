@@ -21,6 +21,8 @@ public class MessageViewModel extends ViewModel {
     }
 
     public LiveData<List<Message>> get() {
+        messageRepository = new MessageRepository();
+        messages = messageRepository.getAll();
         return messages;
     }
 
