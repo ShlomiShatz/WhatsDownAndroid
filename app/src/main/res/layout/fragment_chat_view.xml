@@ -5,7 +5,8 @@
     android:id="@+id/msg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatViewFragment">
+    tools:context=".ChatViewFragment"
+    android:background="@drawable/background">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                >
+
+                android:background="#68FFFFFF">
+
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -80,7 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="#68FFFFFF">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

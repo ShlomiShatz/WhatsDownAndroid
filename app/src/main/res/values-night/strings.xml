@@ -9,4 +9,7 @@
     <string name="sender">sender</string>
     <string name="content">content</string>
     <string name="time">time</string>
+    <string name="logout">logout</string>
+    <string name="add_contact">add contact</string>
+    <string name="menu_contact_list">menu contact list</string>
 </resources>
