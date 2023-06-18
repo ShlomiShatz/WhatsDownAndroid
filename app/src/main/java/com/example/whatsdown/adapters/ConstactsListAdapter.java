@@ -14,12 +14,14 @@ import com.example.whatsdown.ChatViewModel;
 import com.example.whatsdown.Contact;
 import com.example.whatsdown.ContactListFragment;
 import com.example.whatsdown.R;
+import com.example.whatsdown.repositories.ContactRepository;
 
 import java.util.List;
 
 public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdapter.ContactViewHolder> {
     //can i use this
     private OnItemClickListener onItemClickListener;
+
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -52,11 +54,24 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
                     }
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    contactRepository.delete(contacts.get(position));
+                    contacts.remove(position);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
         }
     }
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
+
+    ContactRepository contactRepository = new ContactRepository();
 
     public ConstactsListAdapter(ContactListFragment context) {
         mInflater = LayoutInflater.from(context.getContext());
@@ -73,8 +88,13 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
             final Contact current = contacts.get(position);
 
             holder.contactName.setText(current.getUser().getDisplayName());
-            holder.lastMsg.setText(current.getLastMessage().getContent());
-            holder.time.setText(current.getLastMessage().getCreated());
+            if (current.getLastMessage() == null){
+                holder.lastMsg.setText("");
+                holder.time.setText("");
+            }else {
+                holder.lastMsg.setText(current.getLastMessage().getContent());
+                holder.time.setText(current.getLastMessage().getCreated());
+            }
             holder.contactImg.setImageBitmap(current.getUser().getProfilePic());
         }
 

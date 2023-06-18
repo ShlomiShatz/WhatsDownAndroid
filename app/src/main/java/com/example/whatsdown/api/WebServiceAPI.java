@@ -5,6 +5,7 @@ import com.example.whatsdown.CurrentUser;
 import com.example.whatsdown.Message;
 import com.example.whatsdown.Msg;
 import com.example.whatsdown.UserDits;
+import com.example.whatsdown.objects.Username;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface WebServiceAPI {
     Call<List<Contact>> getChatList(@Header("Authorization") String token);
 
     @POST("Chats")
-    Call<Void> addContact(@Header("Authorization") String token, @Body String username);
+    Call<Void> addContact(@Header("Authorization") String token, @Body Username username);
 
     @POST("Users")
     Call<Void> register(@Body RegisterUser registerUser);

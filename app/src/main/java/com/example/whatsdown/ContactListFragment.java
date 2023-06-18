@@ -36,6 +36,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
     private ContactViewModel contactViewModel;
     private String token;
 
+    private ConstactsListAdapter adapter;
     public ContactListFragment(CurrentUser currentUser, String token) {
         this.currentUser = currentUser;
         this.token = token;
@@ -53,7 +54,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
         viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         viewModel.setToken(token);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
-        final ConstactsListAdapter adapter = new ConstactsListAdapter(this);
+        adapter = new ConstactsListAdapter(this);
         adapter.setOnItemClickListener(new ConstactsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -61,6 +62,8 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
                 viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());
             }
         });
+
+
 
         ImageButton btnMenu = view.findViewById(R.id.menu_contact_list);
         btnMenu.setOnClickListener(v -> {
@@ -76,6 +79,13 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
         contactViewModel.get().observe(getViewLifecycleOwner() , contacts -> adapter.setContacts(contacts));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        contactViewModel.reload();
+        contactViewModel.get().observe(getViewLifecycleOwner() , contacts -> adapter.setContacts(contacts));
     }
 
     @Override

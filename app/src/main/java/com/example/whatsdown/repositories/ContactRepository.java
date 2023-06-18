@@ -4,13 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.whatsdown.Contact;
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.R;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,6 +51,10 @@ public class ContactRepository {
             setValue(list);
         }
 
+        public void setListValue(List<Contact> value) {
+            setValue(value);
+        }
+
         @Override
         protected void onActive() {
             super.onActive();
@@ -64,6 +65,7 @@ public class ContactRepository {
              */
         }
     }
+
 
     public LiveData<List<Contact>> getAll(){
         return contactListData;
@@ -80,14 +82,36 @@ public class ContactRepository {
                 }
             }
         });
+
+
     }
 
     public void delete(final Contact contact){
-        //chatsAPI.delete(contact);
+        chatsAPI.delete(token,contact.getId(),new PostCallback() {
+            @Override
+            public void onPostComplete(boolean registered) {
+                if (registered) {
+                    reload();
+                } else {
+                    //error
+                }
+            }
+        });
     }
 
     public void reload(){
-//             chatsAPI.get();
+         chatsAPI.get(token,new PostCallback() {
+             @Override
+             public void onPostComplete(boolean registered) {
+                 if (chatsAPI.getList().size() > 0) {
+                     list = chatsAPI.getList();
+                 } else {
+                    list = new LinkedList<>();
+                 }
+                 contactListData.setListValue(list);
+             }
+
+         });
 
     }
 

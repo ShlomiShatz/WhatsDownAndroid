@@ -4,6 +4,7 @@ import com.example.whatsdown.Contact;
 import com.example.whatsdown.CurrentUser;
 import com.example.whatsdown.Message;
 import com.example.whatsdown.Msg;
+import com.example.whatsdown.objects.Username;
 import com.example.whatsdown.repositories.ContactRepository;
 
 import java.util.List;
@@ -69,7 +70,8 @@ public class ChatsAPI {
     }
 
     public void add(String tokenToSend, String username, PostCallback callback) {
-        Call<Void> call = webServiceAPI.addContact(tokenToSend, username);
+        Username userNameObj = new Username(username);
+        Call<Void> call = webServiceAPI.addContact(tokenToSend, userNameObj);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -111,6 +113,27 @@ public class ChatsAPI {
 
     public void sendMessage(String id, String tokenToSend, Msg msg, PostCallback callback) {
         Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 200) {
+                    callback.onPostComplete(true);
+                } else {
+                    callback.onPostComplete(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+                callback.onPostComplete(false);
+            }
+        });
+    }
+
+    public void delete(String tokenToSend, String chatId, PostCallback callback ){
+        Call<Void> call = webServiceAPI.deleteContact(chatId, tokenToSend);
+
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
