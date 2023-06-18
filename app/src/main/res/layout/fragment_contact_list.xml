@@ -19,18 +19,17 @@
             android:orientation="horizontal">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView"
+                android:id="@+id/contact_list_image"
                 app:shapeAppearanceOverlay="@style/circular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:padding="5dp"
                 android:contentDescription="@string/user_account_image"
-                tools:src="@tools:sample/avatars"
                 />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/contact_list_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="10"

@@ -1,7 +1,12 @@
 package com.example.whatsdown.api;
 
+import com.example.whatsdown.Contact;
 import com.example.whatsdown.CurrentUser;
+import com.example.whatsdown.Message;
+import com.example.whatsdown.Msg;
 import com.example.whatsdown.UserDits;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,9 +24,21 @@ public interface WebServiceAPI {
     @GET("Users/{username}")
     Call<CurrentUser> getCurrentUser(@Path("username") String username, @Header("Authorization") String token);
 
+    @GET("Chats")
+    Call<List<Contact>> getChatList(@Header("Authorization") String token);
+
+    @POST("Chats")
+    Call<Void> addContact(@Header("Authorization") String token, @Body String username);
+
     @POST("Users")
     Call<Void> register(@Body RegisterUser registerUser);
 
-    @DELETE("posts/{id}")
-    Call<Void> deletePost(@Path("id") int id);
+    @DELETE("Chats/{id}")
+    Call<Void> deleteContact(@Path("id") String id, @Header("Authorization") String token);
+
+    @GET("Chats/{id}/Messages")
+    Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String token);
+
+    @POST("Chats/{id}/Messages")
+    Call<Void> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body Msg msg);
 }

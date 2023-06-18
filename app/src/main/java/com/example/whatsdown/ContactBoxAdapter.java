@@ -54,10 +54,10 @@ public class ContactBoxAdapter extends BaseAdapter {
 
         Contact p = contacts.get(position);
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.name.setText(p.getName());
-        viewHolder.when.setText(p.getWhenLastMessage());
-        viewHolder.img.setImageResource(p.getProfileImage());
-        viewHolder.lstMsg.setText(p.getLastMessage());
+        viewHolder.name.setText(p.getUser().getDisplayName());
+        viewHolder.when.setText(p.getLastMessage().getCreated());
+        viewHolder.img.setImageBitmap(p.getUser().getProfilePic());
+        viewHolder.lstMsg.setText(p.getLastMessage().getContent());
 
 
         return convertView;

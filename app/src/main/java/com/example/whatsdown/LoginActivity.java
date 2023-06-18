@@ -56,6 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void goToChats(CurrentUser user, String token) {
+        Intent i = new Intent(this, ChatActivity.class);
+        i.putExtra("CurrentUser", user);
+        i.putExtra("Token", token);
+        startActivity(i);
+    }
+
     public void onSubmitLogin(View view) {
         boolean usr = validateUsername();
         boolean pwd = validatePassword();
@@ -71,14 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                             username.setErrorEnabled(false);
                             password.setError(null);
                             password.setErrorEnabled(false);
-                            String token = "bearer " + lApi.getToken();
+                            String token = lApi.getToken();
                             lApi.get(userDits.getUsername(), token, new PostCallback() {
                                 @Override
                                 public void onPostComplete(boolean registered) {
                                     if (registered) {
                                         runOnUiThread(() -> {
                                             CurrentUser curUser = lApi.getCurUser();
-                                            //Go to chats
+                                            goToChats(curUser, token);
                                         });
                                     } else {
                                         runOnUiThread(() -> {

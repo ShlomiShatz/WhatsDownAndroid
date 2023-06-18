@@ -2,15 +2,17 @@ package com.example.whatsdown;
 
 public class Message {
 
-    String sender;
+    String id;
+    CurrentUser sender;
     String content;
-    String time;
-    public Message(String sender, String content, String time) {
+    String created;
+    public Message(String id, CurrentUser sender, String content, String created) {
+        this.id = id;
         this.sender = sender;
         this.content = content;
-        this.time = time;
+        this.created = created;
     }
-    public String getSender() { return sender; }
+    public CurrentUser getSender() { return sender; }
     public String getContent() { return content; }
-    public String getTime() { return time; }
+    public String getCreated() { return created; }
 }
