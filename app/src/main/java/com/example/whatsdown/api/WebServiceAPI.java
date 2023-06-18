@@ -3,6 +3,7 @@ package com.example.whatsdown.api;
 import com.example.whatsdown.Contact;
 import com.example.whatsdown.CurrentUser;
 import com.example.whatsdown.Message;
+import com.example.whatsdown.Msg;
 import com.example.whatsdown.UserDits;
 
 import java.util.List;
@@ -39,5 +40,5 @@ public interface WebServiceAPI {
     Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String token);
 
     @POST("Chats/{id}/Messages")
-    Call<Void> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body String msg);
+    Call<Void> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body Msg msg);
 }

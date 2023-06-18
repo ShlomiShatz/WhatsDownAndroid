@@ -3,6 +3,7 @@ package com.example.whatsdown.api;
 import com.example.whatsdown.Contact;
 import com.example.whatsdown.CurrentUser;
 import com.example.whatsdown.Message;
+import com.example.whatsdown.Msg;
 import com.example.whatsdown.repositories.ContactRepository;
 
 import java.util.List;
@@ -108,7 +109,7 @@ public class ChatsAPI {
         });
     }
 
-    public void sendMessage(String id, String tokenToSend, String msg, PostCallback callback) {
+    public void sendMessage(String id, String tokenToSend, Msg msg, PostCallback callback) {
         Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg);
         call.enqueue(new Callback<Void>() {
             @Override

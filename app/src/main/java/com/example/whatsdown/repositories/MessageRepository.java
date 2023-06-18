@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.whatsdown.ChatViewModel;
 import com.example.whatsdown.Message;
+import com.example.whatsdown.Msg;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
@@ -65,7 +66,7 @@ public class MessageRepository {
     }
 
     public void add(final Message message){
-        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), message.getContent(), new PostCallback() {
+        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new Msg(message.getContent()), new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
                 if (registered) {
