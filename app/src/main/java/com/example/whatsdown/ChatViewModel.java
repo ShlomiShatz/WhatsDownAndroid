@@ -8,7 +8,6 @@ public class ChatViewModel extends ViewModel {
     private final MutableLiveData<String> chatId = new MutableLiveData<String>();
     private MutableLiveData<String> tokenLiveData = new MutableLiveData<String>();
     static String chatIdString;
-
     private CurrentUser currentUser;
 
     public static String getChatIdString() {
