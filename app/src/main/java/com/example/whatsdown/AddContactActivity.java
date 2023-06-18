@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Switch;
+
 import android.widget.TextView;
 
-import com.example.whatsdown.repositories.ContactRepository;
 
 public class AddContactActivity extends AppCompatActivity {
 

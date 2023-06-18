@@ -13,19 +13,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
 import android.widget.ImageButton;
-import android.widget.ListView;
+
 import android.widget.PopupMenu;
-import android.widget.Toast;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.whatsdown.adapters.ConstactsListAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ContactListFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
@@ -55,12 +52,9 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
         viewModel.setToken(token);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
         adapter = new ConstactsListAdapter(this);
-        adapter.setOnItemClickListener(new ConstactsListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                viewModel.setChatId(adapter.getContacts().get(position).getId());
-                viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());
-            }
+        adapter.setOnItemClickListener(position -> {
+            viewModel.setChatId(adapter.getContacts().get(position).getId());
+            viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());
         });
 
 

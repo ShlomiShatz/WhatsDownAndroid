@@ -34,7 +34,7 @@ public class ChatActivity extends AppCompatActivity {
         contactViewModel.setToken(token);
 
         viewModel.getChatId().observe(this, chat -> {
-            if (chat == ""){
+            if (chat.equals("")){
                 changeFragment(new ContactListFragment(currentUser, token));
             } else {
                 changeFragment(new ChatViewFragment());

@@ -1,7 +1,5 @@
 package com.example.whatsdown.api;
 
-import com.example.whatsdown.R;
-import android.content.Context;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
