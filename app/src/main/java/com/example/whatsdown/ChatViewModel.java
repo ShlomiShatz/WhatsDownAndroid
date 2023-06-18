@@ -9,15 +9,6 @@ public class ChatViewModel extends ViewModel {
     private MutableLiveData<String> tokenLiveData = new MutableLiveData<String>();
     static String chatIdString;
     private CurrentUser currentUser;
-    public void setCurrentUser(CurrentUser currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public CurrentUser getCurrentUser() {
-        return currentUser;
-    }
-
-    private CurrentUser currentUser;
 
     public static String getChatIdString() {
         return chatIdString;
