@@ -1,12 +1,17 @@
 package com.example.whatsdown.repositories;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.whatsdown.contact.AddContactActivity;
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
+import com.example.whatsdown.view_model.ContactViewModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +22,6 @@ public class ContactRepository {
     private List<Contact> list;
     private ChatsAPI chatsAPI;
     private String token;
-
 
     public ContactRepository(){
         //LocalDatabase db = LocalDatabase.getInstance();
@@ -71,20 +75,20 @@ public class ContactRepository {
         return contactListData;
     }
 
-    public void add(String username){
+    public void add(String username, ContactViewModel.AddContactCallback callback) {
         chatsAPI.add(token, username, new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
                 if (registered) {
                     reload();
+                    callback.onContactAdded(true);
                 } else {
-                    //error
+                    callback.onContactAdded(false);
                 }
             }
         });
-
-
     }
+
 
     public void delete(final Contact contact){
         chatsAPI.delete(token,contact.getId(),new PostCallback() {
@@ -92,8 +96,6 @@ public class ContactRepository {
             public void onPostComplete(boolean registered) {
                 if (registered) {
                     reload();
-                } else {
-                    //error
                 }
             }
         });
