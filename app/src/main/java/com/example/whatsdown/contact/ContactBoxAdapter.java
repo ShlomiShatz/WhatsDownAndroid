@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.contact;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.example.whatsdown.R;
 
 import java.util.List;
 

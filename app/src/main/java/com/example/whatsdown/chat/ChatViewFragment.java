@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.chat;
 
 import android.os.Bundle;
 
@@ -15,10 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.whatsdown.objects.Msg;
+import com.example.whatsdown.R;
 import com.example.whatsdown.adapters.MessagesListAdapter;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
+import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -71,7 +74,7 @@ public class ChatViewFragment extends Fragment{
                                 scrollDown(view, messagesListAdapter);
                             });
                         } else {
-                            Toast.makeText(view.getContext(), "error occur",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "Error occurred",Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -89,6 +92,6 @@ public class ChatViewFragment extends Fragment{
 
     private void scrollDown(View view,MessagesListAdapter messagesListAdapter ){
         RecyclerView recyclerView = view.findViewById(R.id.allMsg); // Replace with your RecyclerView ID
-        recyclerView.post(() -> recyclerView.scrollToPosition(messagesListAdapter.getItemCount()-1));
+        recyclerView.post(() -> recyclerView.scrollToPosition(messagesListAdapter.getItemCount() - 1));
     }
 }

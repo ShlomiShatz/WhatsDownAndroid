@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.chat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,6 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.whatsdown.contact.ContactListFragment;
+import com.example.whatsdown.view_model.ContactViewModel;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.R;
+import com.example.whatsdown.view_model.ChatViewModel;
 
 public class ChatActivity extends AppCompatActivity {
 

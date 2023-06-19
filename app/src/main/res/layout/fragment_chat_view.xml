@@ -5,7 +5,7 @@
     android:id="@+id/msg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatViewFragment"
+    tools:context=".chat.ChatViewFragment"
     android:background="@drawable/background">
 
 

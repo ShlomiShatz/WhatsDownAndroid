@@ -3,7 +3,7 @@ package com.example.whatsdown.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.Contact;
+import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;

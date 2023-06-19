@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.contact;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import android.widget.TextView;
+
+import com.example.whatsdown.R;
+import com.example.whatsdown.view_model.ContactViewModel;
 
 
 public class AddContactActivity extends AppCompatActivity {

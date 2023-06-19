@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.whatsdown.Contact;
-import com.example.whatsdown.ContactListFragment;
+import com.example.whatsdown.contact.Contact;
+import com.example.whatsdown.contact.ContactListFragment;
 import com.example.whatsdown.R;
 import com.example.whatsdown.repositories.ContactRepository;
 

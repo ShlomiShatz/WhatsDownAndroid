@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.objects;
 
 public class UserDits {
     private String username;

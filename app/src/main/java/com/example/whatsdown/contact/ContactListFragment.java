@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,12 @@ import android.widget.PopupMenu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.whatsdown.view_model.ChatViewModel;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.R;
+import com.example.whatsdown.SettingActivity;
 import com.example.whatsdown.adapters.ConstactsListAdapter;
-
+import com.example.whatsdown.view_model.ContactViewModel;
 
 
 public class ContactListFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {

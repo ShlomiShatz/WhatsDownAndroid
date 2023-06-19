@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.whatsdown.ChatViewFragment;
-import com.example.whatsdown.Message;
+import com.example.whatsdown.chat.ChatViewFragment;
+import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.R;
 
 import java.util.List;

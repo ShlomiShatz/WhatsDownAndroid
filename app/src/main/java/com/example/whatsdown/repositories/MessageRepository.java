@@ -3,9 +3,9 @@ package com.example.whatsdown.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.ChatViewModel;
-import com.example.whatsdown.Message;
-import com.example.whatsdown.Msg;
+import com.example.whatsdown.view_model.ChatViewModel;
+import com.example.whatsdown.objects.Message;
+import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
@@ -42,7 +42,7 @@ public class MessageRepository {
                         messages = chatsAPI.getMessageList();
                         setValue(messages);
                     } else {
-                        //Error
+                        //Error - logout
                     }
                 }
             });
@@ -72,8 +72,7 @@ public class MessageRepository {
                 if (registered) {
 
                 } else {
-                    //Error
-
+                    //Error - unregistered
                 }
             }
         });
@@ -90,7 +89,7 @@ public class MessageRepository {
                 if (registered) {
                     messages = chatsAPI.getMessageList();
                 } else {
-                    //Error
+                    //Error - logout
 
                 }
             }

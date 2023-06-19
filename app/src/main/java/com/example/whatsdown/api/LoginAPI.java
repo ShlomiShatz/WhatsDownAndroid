@@ -1,9 +1,7 @@
 package com.example.whatsdown.api;
 
-import android.util.Log;
-
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.UserDits;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.UserDits;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

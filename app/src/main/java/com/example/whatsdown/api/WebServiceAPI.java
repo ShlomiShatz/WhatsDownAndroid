@@ -1,10 +1,10 @@
 package com.example.whatsdown.api;
 
-import com.example.whatsdown.Contact;
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.Message;
-import com.example.whatsdown.Msg;
-import com.example.whatsdown.UserDits;
+import com.example.whatsdown.contact.Contact;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.Message;
+import com.example.whatsdown.objects.Msg;
+import com.example.whatsdown.objects.UserDits;
 import com.example.whatsdown.objects.Username;
 
 import java.util.List;

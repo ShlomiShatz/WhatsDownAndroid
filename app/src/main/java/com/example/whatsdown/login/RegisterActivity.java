@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.whatsdown.R;
 import com.example.whatsdown.api.RegisterAPI;
 import com.example.whatsdown.api.RegisterUser;
 import com.google.android.material.button.MaterialButton;

@@ -3,9 +3,7 @@ package com.example.whatsdown.view_model;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.whatsdown.Contact;
-import com.example.whatsdown.Message;
-import com.example.whatsdown.repositories.ContactRepository;
+import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.repositories.MessageRepository;
 
 import java.util.List;

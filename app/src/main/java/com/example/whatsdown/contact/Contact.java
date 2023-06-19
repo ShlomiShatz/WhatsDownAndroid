@@ -1,4 +1,7 @@
-package com.example.whatsdown;
+package com.example.whatsdown.contact;
+
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.LastMessage;
 
 public class Contact {
     String id;

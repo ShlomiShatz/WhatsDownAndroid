@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

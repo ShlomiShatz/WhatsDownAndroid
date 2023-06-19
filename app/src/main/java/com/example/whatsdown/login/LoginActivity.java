@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.whatsdown.chat.ChatActivity;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.R;
+import com.example.whatsdown.objects.UserDits;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
 import com.google.android.material.textfield.TextInputLayout;

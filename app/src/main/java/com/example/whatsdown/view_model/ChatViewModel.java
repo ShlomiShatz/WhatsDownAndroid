@@ -1,8 +1,10 @@
-package com.example.whatsdown;
+package com.example.whatsdown.view_model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.whatsdown.objects.CurrentUser;
 
 public class ChatViewModel extends ViewModel {
     private final MutableLiveData<String> chatId = new MutableLiveData<String>();

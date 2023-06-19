@@ -1,8 +1,9 @@
-package com.example.whatsdown;
+package com.example.whatsdown.view_model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.repositories.ContactRepository;
 
 import java.util.List;
