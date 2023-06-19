@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 
 public class SettingActivity extends AppCompatActivity {
     String port;
@@ -21,7 +23,8 @@ public class SettingActivity extends AppCompatActivity {
 
         Button save = (Button)findViewById(R.id.saveSetting);
         save.setOnClickListener(v -> {
-            EditText boxPort = (EditText)findViewById(R.id.portServerSetting);
+
+            EditText boxPort = ((TextInputLayout)findViewById(R.id.portServerSetting)).getEditText();
             port = boxPort.getText().toString();
             Switch switchMode = (Switch)findViewById(R.id.switch1);
             mode = switchMode.isChecked();

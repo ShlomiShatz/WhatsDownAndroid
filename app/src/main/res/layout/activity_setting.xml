@@ -38,8 +38,41 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginStart="20dp"
                 android:textSize="80sp"
-                android:text="setting" />
+                android:text="@string/setting" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="80dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/portServerSetting"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/server_port"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:hintTextColor="@color/black"
+                app:startIconDrawable="@mipmap/ic_port"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -47,41 +80,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:text="server port"
-                android:textSize="30sp" />
-
-            <EditText
-                android:id="@+id/portServerSetting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:ems="10"
-                android:textSize="30sp"
-                android:inputType="text"
-                android:hint="port"
-                android:autofillHints="no"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
             <Switch
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:text="Switch"
+                android:text="@string/dark_theme"
                 android:textSize="30sp"
                 android:padding="10dp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -92,9 +96,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="80dp"
             android:backgroundTint="@color/yellow"
             android:padding="10dp"
-            android:text="save changes"
+            android:text="@string/save_settings"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -102,7 +107,7 @@
             android:id="@+id/exitSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="exit"
+            android:text="@string/back"
             android:layout_gravity="center"
             android:textSize="20sp"
             android:textColor="@color/black"

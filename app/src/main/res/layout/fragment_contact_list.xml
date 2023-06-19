@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+                android:textSize="30sp"
                 android:text="@string/userName"
                 android:gravity="center"/>
 
