@@ -1,9 +1,14 @@
 package com.example.whatsdown.contact;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.LastMessage;
 
+@Entity
 public class Contact {
+    @PrimaryKey()
     String id;
     CurrentUser user;
     LastMessage lastMessage;

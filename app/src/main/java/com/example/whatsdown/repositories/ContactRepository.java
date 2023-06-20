@@ -3,6 +3,8 @@ package com.example.whatsdown.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.whatsdown.Dao.AppDB;
+import com.example.whatsdown.Dao.ContactDao;
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
@@ -13,15 +15,15 @@ import java.util.List;
 
 public class ContactRepository {
     private ContactListData contactListData;
-    //    private ContactDao contactDao;
+    private ContactDao contactDao;
     private List<Contact> list;
     private ChatsAPI chatsAPI;
     private String token;
 
 
     public ContactRepository(){
-        //LocalDatabase db = LocalDatabase.getInstance();
-        //contactDao = db.contactDao();
+        AppDB  db = AppDB.getInstance();
+        contactDao = db.contactDao();
         chatsAPI = new ChatsAPI();
         token = LoginAPI.getToken();
         contactListData = new ContactListData();

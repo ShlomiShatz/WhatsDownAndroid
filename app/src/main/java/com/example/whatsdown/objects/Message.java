@@ -1,11 +1,15 @@
 package com.example.whatsdown.objects;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
+@Entity
 public class Message {
-
+    @PrimaryKey()
     String id;
     CurrentUser sender;
     String content;
