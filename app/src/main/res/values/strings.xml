@@ -2,7 +2,6 @@
 
 
     <string name="app_name">WhatsDown</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="userName">userName</string>
     <string name="setting">Setting</string>
@@ -33,8 +32,9 @@
     <string name="logout">Logout</string>
     <string name="add_contact">Add Contact</string>
     <string name="menu_contact_list">Menu Contact List</string>
-    <string name="server_port">Server port:</string>
+    <string name="server_port">Server port</string>
     <string name="dark_theme">Dark theme</string>
     <string name="save_settings">Save Settings</string>
+    <string name="enter_contact_username">Enter contact username</string>
 
 </resources>
