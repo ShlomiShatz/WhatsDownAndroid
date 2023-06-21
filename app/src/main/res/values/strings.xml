@@ -36,5 +36,7 @@
     <string name="dark_theme">Dark theme</string>
     <string name="save_settings">Save Settings</string>
     <string name="enter_contact_username">Enter contact username</string>
+    <string name="channel_name">Message recieved!</string>
+    <string name="channel_description">Recieved a message from WhatsDown</string>
 
 </resources>

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.LastMessage;
 
-@Entity
+//@Entity
 public class Contact {
-    @PrimaryKey()
+//    @PrimaryKey()
     String id;
     CurrentUser user;
     LastMessage lastMessage;
