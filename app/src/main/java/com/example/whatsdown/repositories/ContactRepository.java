@@ -10,6 +10,7 @@ import com.example.whatsdown.api.ContactAPI;
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
+import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
 
 import java.util.LinkedList;
@@ -40,19 +41,16 @@ public class ContactRepository {
 
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
-            //super();
             super();
-            setValue(new LinkedList<>());
+            new Thread(()->{
+                contactListData.postValue(contactDao.get(ChatViewModel.getChatIdString()));
+            }).start();
         }
 
         @Override
         protected void onActive() {
             super.onActive();
 
-            /*new Thread(()->{
-                contactListData.postValue(contactDao.get());
-            }).start();
-             */
             contactAPI.get();
         }
     }

@@ -20,7 +20,7 @@ public interface ContactDao {
     List<Contact> index();
 
     @Query("SELECT * FROM contact WHERE id = :id")
-    Contact get(String id);
+    List<Contact> get(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertReplace(Contact... contacts);
