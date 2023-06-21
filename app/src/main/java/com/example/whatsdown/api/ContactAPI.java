@@ -25,9 +25,10 @@ public class ContactAPI {
     WebServiceAPI webServiceAPI;
 
     ContactDao contactDao;
+    MessageDao messageDao;
     MutableLiveData<List<Contact>> listContact;
 
-    public ContactAPI(MutableLiveData<List<Contact>> listContacts, ContactDao cDao) {
+    public ContactAPI(MutableLiveData<List<Contact>> listContacts, ContactDao cDao, MessageDao mDao) {
         // FOR DEBUGGING*****************************************************
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -37,6 +38,7 @@ public class ContactAPI {
         // TILL HERE*************************************************************
         this.listContact = listContacts;
         this.contactDao = cDao;
+        this.messageDao = mDao;
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:5000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -98,6 +100,7 @@ public class ContactAPI {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 200) {
                     contactDao.deleteById(chatId);
+                    messageDao.deleteByChatId(chatId);
                 }
             }
 

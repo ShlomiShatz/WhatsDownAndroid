@@ -39,6 +39,4 @@ public interface ContactDao {
     @Query("DELETE FROM contact WHERE id = :id")
     void deleteById(String id);
 
-    @Query("UPDATE contact SET lastMessage = :lstMsg WHERE id = :id")
-    void Update(LastMessage lstMsg, String id);
 }

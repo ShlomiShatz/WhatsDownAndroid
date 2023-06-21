@@ -56,6 +56,9 @@ public class ChatsAPI {
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if(response.code() == 200) {
                     List<Message> lst = response.body();
+                    for (Message msg:lst) {
+                        msg.setChatId(ChatViewModel.getChatIdString());
+                    }
                     listMessages.postValue(lst);
                     messageDao.insertListReplace(lst);
                 } else {
@@ -78,9 +81,12 @@ public class ChatsAPI {
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if(response.code() == 200) {
                     Message newMsg = response.body();
-                    LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
-
-                    getMessages();
+                    newMsg.setChatId(ChatViewModel.getChatIdString());
+                    //LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
+                    List<Message> lstMessages = listMessages.getValue();
+                    lstMessages.add(newMsg);
+                    listMessages.postValue(lstMessages);
+                    messageDao.insert(newMsg);
                 }
             }
 

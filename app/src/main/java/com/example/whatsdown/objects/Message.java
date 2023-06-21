@@ -17,17 +17,27 @@ public class Message {
     @PrimaryKey()
     @NonNull
     private String id;
+    private String chatId;
     private CurrentUser sender;
     private String content;
     private String created;
-    public Message(String id, CurrentUser sender, String content, String created) {
+    public Message(String id, CurrentUser sender, String content, String created, String chatId) {
         this.id = id;
         this.sender = sender;
         this.content = content;
         this.created = created;
+        this.chatId = chatId;
     }
     public CurrentUser getSender() { return sender; }
     public String getContent() { return content; }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     @NonNull
     public String getId() {
