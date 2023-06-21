@@ -1,9 +1,13 @@
 package com.example.whatsdown.objects;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LastMessage {
+
     String id;
     String created;
     String content;

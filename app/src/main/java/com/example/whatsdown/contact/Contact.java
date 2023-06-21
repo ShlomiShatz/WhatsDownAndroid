@@ -1,17 +1,22 @@
 package com.example.whatsdown.contact;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.whatsdown.Dao.Converters;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.LastMessage;
 
 @Entity
+@TypeConverters(Converters.class)
 public class Contact {
     @PrimaryKey()
-    String id;
-    CurrentUser user;
-    LastMessage lastMessage;
+    @NonNull
+    private String id;
+    private CurrentUser user;
+    private LastMessage lastMessage;
 //    String name;
 //    String whenLastMessage;
 //    int img;

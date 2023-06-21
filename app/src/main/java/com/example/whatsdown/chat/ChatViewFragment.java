@@ -63,22 +63,7 @@ public class ChatViewFragment extends Fragment{
             String msg = "";
             if (input != null){
                 msg = input.getText().toString().trim();
-                Msg msgSend = new Msg(msg);
-                ChatsAPI api = new ChatsAPI();
-                api.sendMessage(chatId, LoginAPI.getToken(),msgSend,new PostCallback() {
-                    @Override
-                    public void onPostComplete(boolean registered) {
-                        if (registered) {
-                            messageViewModel.get().observe(getViewLifecycleOwner(), messages -> {
-                                messagesListAdapter.setMessages(messages);
-                                scrollDown(view, messagesListAdapter);
-                            });
-                        } else {
-                            Toast.makeText(view.getContext(), "Error occurred",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                });
+                messageViewModel.add(msg);
             }
             if (!msg.isEmpty()){
                 input.setText("");

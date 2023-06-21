@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.whatsdown.objects.Message;
+import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.repositories.MessageRepository;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class MessageViewModel extends ViewModel {
         return messages;
     }
 
-    public void add(Message message){
+    public void add(String message){
         messageRepository.add(message);
     }
 

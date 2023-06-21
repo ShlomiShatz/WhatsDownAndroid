@@ -28,7 +28,7 @@ public interface WebServiceAPI {
     Call<List<Contact>> getChatList(@Header("Authorization") String token);
 
     @POST("Chats")
-    Call<Void> addContact(@Header("Authorization") String token, @Body Username username);
+    Call<Contact> addContact(@Header("Authorization") String token, @Body Username username);
 
     @POST("Users")
     Call<Void> register(@Body RegisterUser registerUser);
@@ -40,5 +40,5 @@ public interface WebServiceAPI {
     Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String token);
 
     @POST("Chats/{id}/Messages")
-    Call<Void> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body Msg msg);
+    Call<Message> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body Msg msg);
 }

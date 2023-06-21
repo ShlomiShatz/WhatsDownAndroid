@@ -82,8 +82,6 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
     @Override
     public void onResume() {
         super.onResume();
-        contactViewModel.reload();
-        contactViewModel.get().observe(getViewLifecycleOwner() , contacts -> adapter.setContacts(contacts));
     }
 
     @Override

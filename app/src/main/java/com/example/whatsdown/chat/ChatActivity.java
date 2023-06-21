@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.whatsdown.Dao.LocalDatabase;
 import com.example.whatsdown.contact.ContactListFragment;
 import com.example.whatsdown.view_model.ContactViewModel;
 import com.example.whatsdown.objects.CurrentUser;
@@ -29,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalDatabase.setContext(this);
         Intent i = getIntent();
         currentUser = (CurrentUser) i.getSerializableExtra("CurrentUser");
         token = i.getStringExtra("Token");

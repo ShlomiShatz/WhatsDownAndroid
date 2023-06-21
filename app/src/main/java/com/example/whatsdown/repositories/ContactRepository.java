@@ -1,14 +1,12 @@
 package com.example.whatsdown.repositories;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.contact.AddContactActivity;
+import com.example.whatsdown.Dao.ContactDao;
+import com.example.whatsdown.Dao.LocalDatabase;
+import com.example.whatsdown.api.ContactAPI;
 import com.example.whatsdown.contact.Contact;
-import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
 import com.example.whatsdown.view_model.ContactViewModel;
@@ -18,17 +16,18 @@ import java.util.List;
 
 public class ContactRepository {
     private ContactListData contactListData;
-    //    private ContactDao contactDao;
+    private ContactDao contactDao;
     private List<Contact> list;
-    private ChatsAPI chatsAPI;
+    private ContactListData contactListDataListData;
+    private ContactAPI contactAPI;
     private String token;
 
     public ContactRepository(){
-        //LocalDatabase db = LocalDatabase.getInstance();
-        //contactDao = db.contactDao();
-        chatsAPI = new ChatsAPI();
+        LocalDatabase db = LocalDatabase.getInstance();
+        contactDao = db.contactDao();
         token = LoginAPI.getToken();
         contactListData = new ContactListData();
+        contactAPI = new ContactAPI(contactListData, contactDao);
     }
 
     public void setToken(String token) {
@@ -39,24 +38,8 @@ public class ContactRepository {
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             //super();
-            chatsAPI.get(token, new PostCallback() {
-                @Override
-                public void onPostComplete(boolean registered) {
-                    if (registered) {
-                        if (chatsAPI.getList().size() > 0) {
-                            list = chatsAPI.getList();
-                            setValue(list);
-                        }
-                    } else {
-                        setValue(new LinkedList<>());
-                    }
-                }
-            });
-            setValue(list);
-        }
-
-        public void setListValue(List<Contact> value) {
-            setValue(value);
+            super();
+            setValue(new LinkedList<>());
         }
 
         @Override
@@ -64,9 +47,10 @@ public class ContactRepository {
             super.onActive();
 
             /*new Thread(()->{
-                contactListData.contactValue(contactDao.get());
+                contactListData.postValue(contactDao.get());
             }).start();
              */
+            contactAPI.get();
         }
     }
 
@@ -76,11 +60,10 @@ public class ContactRepository {
     }
 
     public void add(String username, ContactViewModel.AddContactCallback callback) {
-        chatsAPI.add(token, username, new PostCallback() {
+        contactAPI.add(username, new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
                 if (registered) {
-                    reload();
                     callback.onContactAdded(true);
                 } else {
                     callback.onContactAdded(false);
@@ -91,30 +74,11 @@ public class ContactRepository {
 
 
     public void delete(final Contact contact){
-        chatsAPI.delete(token,contact.getId(),new PostCallback() {
-            @Override
-            public void onPostComplete(boolean registered) {
-                if (registered) {
-                    reload();
-                }
-            }
-        });
+        contactAPI.delete(contact.getId());
     }
 
     public void reload(){
-         chatsAPI.get(token,new PostCallback() {
-             @Override
-             public void onPostComplete(boolean registered) {
-                 if (chatsAPI.getList().size() > 0) {
-                     list = chatsAPI.getList();
-                 } else {
-                    list = new LinkedList<>();
-                 }
-                 contactListData.setListValue(list);
-             }
-
-         });
-
+         contactAPI.get();
     }
 
 

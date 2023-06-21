@@ -3,10 +3,12 @@ package com.example.whatsdown.Dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.whatsdown.contact.Contact;
+import com.example.whatsdown.objects.LastMessage;
 
 import java.util.List;
 
@@ -19,12 +21,24 @@ public interface ContactDao {
     @Query("SELECT * FROM contact WHERE id = :id")
     Contact get(String id);
 
-    @Insert
-    void insert(Contact... contacts);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertReplace(Contact... contacts);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertListReplace(List<Contact> contacts);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertIgnore(Contact... contacts);
 
     @Update
     void update(Contact... contacts);
 
     @Delete
     void delete(Contact... contacts);
+
+    @Query("DELETE FROM contact WHERE id = :id")
+    void deleteById(String id);
+
+    @Query("UPDATE contact SET lastMessage = :lstMsg WHERE id = :id")
+    void Update(LastMessage lstMsg, String id);
 }

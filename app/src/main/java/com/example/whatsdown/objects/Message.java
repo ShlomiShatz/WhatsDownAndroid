@@ -1,19 +1,25 @@
 package com.example.whatsdown.objects;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.whatsdown.Dao.Converters;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
 @Entity
+@TypeConverters(Converters.class)
 public class Message {
     @PrimaryKey()
-    String id;
-    CurrentUser sender;
-    String content;
-    String created;
+    @NonNull
+    private String id;
+    private CurrentUser sender;
+    private String content;
+    private String created;
     public Message(String id, CurrentUser sender, String content, String created) {
         this.id = id;
         this.sender = sender;
@@ -22,6 +28,12 @@ public class Message {
     }
     public CurrentUser getSender() { return sender; }
     public String getContent() { return content; }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
     public String getCreated() {
         String outputFormat = "yyyy-MM-dd HH:mm:ss";
         try {
