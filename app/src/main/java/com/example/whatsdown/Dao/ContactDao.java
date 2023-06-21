@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.objects.LastMessage;
+import com.example.whatsdown.objects.Message;
 
 import java.util.List;
 
@@ -38,5 +39,8 @@ public interface ContactDao {
 
     @Query("DELETE FROM contact WHERE id = :id")
     void deleteById(String id);
+
+    @Query("UPDATE contact SET lastMessage = :msg WHERE id = :id")
+    void updateLastMessage(String msg, String id);
 
 }

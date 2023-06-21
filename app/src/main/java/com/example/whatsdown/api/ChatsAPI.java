@@ -2,11 +2,13 @@ package com.example.whatsdown.api;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.whatsdown.Dao.ContactDao;
 import com.example.whatsdown.Dao.MessageDao;
 import com.example.whatsdown.objects.LastMessage;
 import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.view_model.ChatViewModel;
+import com.google.gson.Gson;
 
 
 import java.util.LinkedList;
@@ -24,13 +26,14 @@ public class ChatsAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
     MessageDao messageDao;
+    ContactDao contactDao;
     //List<Message> messageList;
     MutableLiveData<List<Message>> listMessages;
 
 
 
 
-    public ChatsAPI(MutableLiveData<List<Message>> listMessage, MessageDao mDao) {
+    public ChatsAPI(MutableLiveData<List<Message>> listMessage, MessageDao mDao, ContactDao cDao) {
         // FOR DEBUGGING*****************************************************
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -40,6 +43,7 @@ public class ChatsAPI {
         // TILL HERE*************************************************************
         this.listMessages = listMessage;
         this.messageDao = mDao;
+        this.contactDao = cDao;
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:5000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -60,7 +64,10 @@ public class ChatsAPI {
                         msg.setChatId(ChatViewModel.getChatIdString());
                     }
                     listMessages.postValue(lst);
-                    messageDao.insertListReplace(lst);
+                    new Thread(()->{
+                        messageDao.insertListReplace(lst);
+                    }).start();
+
                 } else {
                     listMessages.postValue(new LinkedList<Message>());
                 }
@@ -82,11 +89,17 @@ public class ChatsAPI {
                 if(response.code() == 200) {
                     Message newMsg = response.body();
                     newMsg.setChatId(ChatViewModel.getChatIdString());
-                    //LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
+                    LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
+                    String stringLstMsg = new Gson().toJson(lstMsg);
                     List<Message> lstMessages = listMessages.getValue();
                     lstMessages.add(newMsg);
                     listMessages.postValue(lstMessages);
-                    messageDao.insert(newMsg);
+                    new Thread(()->{
+                        messageDao.insert(newMsg);
+                    }).start();
+                    new Thread(()->{
+                        contactDao.updateLastMessage(stringLstMsg, ChatViewModel.getChatIdString());
+                    }).start();
                 }
             }
 

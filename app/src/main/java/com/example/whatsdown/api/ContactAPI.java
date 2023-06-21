@@ -54,7 +54,9 @@ public class ContactAPI {
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                 if(response.code() == 200) {
                     listContact.postValue(response.body());
-                    contactDao.insertListReplace(response.body());
+                    new Thread(()->{
+                        contactDao.insertListReplace(response.body());
+                    }).start();
                 } else {
                     listContact.postValue(new ArrayList<>());
                 }
@@ -77,7 +79,10 @@ public class ContactAPI {
                     List<Contact> contacts = listContact.getValue();
                     contacts.add(contact);
                     listContact.postValue(contacts);
-                    contactDao.insertReplace(contact);
+                    new Thread(()->{
+                        contactDao.insertReplace(contact);
+                    }).start();
+
                     callback.onPostComplete(true);
                 } else {
                     callback.onPostComplete(false);
@@ -99,8 +104,12 @@ public class ContactAPI {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 200) {
-                    contactDao.deleteById(chatId);
-                    messageDao.deleteByChatId(chatId);
+                    new Thread(()->{
+                        contactDao.deleteById(chatId);
+                    }).start();
+                    new Thread(()->{
+                        messageDao.deleteByChatId(chatId);
+                    }).start();
                 }
             }
 
