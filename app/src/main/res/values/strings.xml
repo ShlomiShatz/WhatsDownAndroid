@@ -36,5 +36,6 @@
     <string name="dark_theme">Dark theme</string>
     <string name="save_settings">Save Settings</string>
     <string name="enter_contact_username">Enter contact username</string>
+    <string name="path_server">path server</string>
 
 </resources>

@@ -77,6 +77,9 @@ public class ContactRepository {
     public void delete(final Contact contact){
         contactAPI.delete(contact.getId());
     }
+    public void deleteAll(){
+        contactAPI.deleteAll();
+    }
 
     public void reload(){
          contactAPI.get();

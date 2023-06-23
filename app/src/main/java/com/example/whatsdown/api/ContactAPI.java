@@ -40,7 +40,7 @@ public class ContactAPI {
         this.contactDao = cDao;
         this.messageDao = mDao;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();
@@ -118,5 +118,11 @@ public class ContactAPI {
                 t.printStackTrace();
             }
         });
+    }
+
+    public void deleteAll() {
+        new Thread(()->{
+            contactDao.deleteAll();
+        }).start();
     }
 }

@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.whatsdown.SettingActivity;
 import com.example.whatsdown.chat.ChatActivity;
+import com.example.whatsdown.contact.AddContactActivity;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
 import com.example.whatsdown.objects.UserDits;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,6 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         TextView tvRegistration = findViewById(R.id.login_tvRegistration);
         tvRegistration.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);
+            startActivity(i);
+        });
+
+        FloatingActionButton settingButton = findViewById(R.id.setting_login);
+        settingButton.setOnClickListener(v -> {
+            Intent i = new Intent(this, SettingActivity.class);
             startActivity(i);
         });
     }

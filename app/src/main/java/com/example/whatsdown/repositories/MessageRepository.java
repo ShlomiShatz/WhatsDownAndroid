@@ -57,8 +57,8 @@ public class MessageRepository {
         chatsAPI.sendMessage(new Msg(message));
     }
 
-    public void delete(final Message message){
-        //ChatsAPI.delete(message);
+    public void deleteAll(){
+        chatsAPI.deleteAll();
     }
 
     public void reload(){

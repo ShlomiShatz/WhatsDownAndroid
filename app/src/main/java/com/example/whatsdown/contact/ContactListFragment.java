@@ -21,6 +21,7 @@ import android.widget.PopupMenu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.whatsdown.api.ServerPath;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
@@ -36,6 +37,8 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
     private ChatViewModel viewModel;
     private ContactViewModel contactViewModel;
     private String token;
+
+    private String pathServer = ServerPath.getPath();
 
     private ConstactsListAdapter adapter;
     public ContactListFragment(CurrentUser currentUser, String token) {
@@ -82,6 +85,9 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
     @Override
     public void onResume() {
         super.onResume();
+        if (!pathServer.equals(ServerPath.getPath())){
+            requireActivity().finish();
+        }
     }
 
     @Override
@@ -95,6 +101,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
             requireActivity().finish();
             return true;
         } else if (itemId == R.id.setting_menu) {
+            pathServer = ServerPath.getPath();
             Intent i = new Intent(requireActivity(), SettingActivity.class);
             startActivity(i);
             return true;

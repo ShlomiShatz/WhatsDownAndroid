@@ -35,7 +35,7 @@ public class LoginAPI {
         // TILL HERE*************************************************************
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();

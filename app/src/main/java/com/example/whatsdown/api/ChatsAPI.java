@@ -45,7 +45,7 @@ public class ChatsAPI {
         this.messageDao = mDao;
         this.contactDao = cDao;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();
@@ -110,4 +110,9 @@ public class ChatsAPI {
         });
     }
 
+    public void deleteAll() {
+        new Thread(()->{
+            messageDao.deleteAll();
+        }).start();
+    }
 }

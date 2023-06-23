@@ -23,6 +23,7 @@ public class ChatActivity extends AppCompatActivity {
     private String token;
     private ContactViewModel contactViewModel;
 
+
     public static CurrentUser getCurrentUser() {
         return currentUser;
     }
