@@ -1,5 +1,6 @@
 package com.example.whatsdown.chat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,6 +15,9 @@ import com.example.whatsdown.view_model.ContactViewModel;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
 import com.example.whatsdown.view_model.ChatViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Intent i = getIntent();
         currentUser = (CurrentUser) i.getSerializableExtra("CurrentUser");
         token = i.getStringExtra("Token");

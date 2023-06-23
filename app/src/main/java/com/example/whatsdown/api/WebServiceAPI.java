@@ -2,6 +2,7 @@ package com.example.whatsdown.api;
 
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.objects.UserDits;
@@ -41,4 +42,8 @@ public interface WebServiceAPI {
 
     @POST("Chats/{id}/Messages")
     Call<Void> sendMessage(@Path("id") String id, @Header("Authorization") String token, @Body Msg msg);
+
+    @POST("Tokens/{username}")
+    Call<Void> sendFirebaseToken(@Path("username") String username, @Header("Authorization") String token, @Body FirebaseToken firebaseToken);
+
 }

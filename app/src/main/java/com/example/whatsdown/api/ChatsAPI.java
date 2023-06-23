@@ -40,7 +40,7 @@ public class ChatsAPI {
         // TILL HERE*************************************************************
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl("http://192.168.1.19:5000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)// FOR DEBUGGING********************************************************
                 .build();

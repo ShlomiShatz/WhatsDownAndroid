@@ -1,19 +1,30 @@
 package com.example.whatsdown.login;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.whatsdown.chat.ChatActivity;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
+import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.UserDits;
 import com.example.whatsdown.api.LoginAPI;
 import com.example.whatsdown.api.PostCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,12 +92,14 @@ public class LoginActivity extends AppCompatActivity {
                             password.setError(null);
                             password.setErrorEnabled(false);
                             String token = lApi.getToken();
+                            getAndSendFirebaseToken(lApi, userDits.getUsername(), token);
                             lApi.get(userDits.getUsername(), token, new PostCallback() {
                                 @Override
                                 public void onPostComplete(boolean registered) {
                                     if (registered) {
                                         runOnUiThread(() -> {
                                             CurrentUser curUser = lApi.getCurUser();
+                                            getAndSendFirebaseToken(lApi, userDits.getUsername(), token);
                                             goToChats(curUser, token);
                                         });
                                     } else {
@@ -111,6 +124,34 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public void getAndSendFirebaseToken(LoginAPI lApi, String username, String userToken) {
+        if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            String[] perms = {Manifest.permission.POST_NOTIFICATIONS};
+            ActivityCompat.requestPermissions(LoginActivity.this, perms, 1);
+        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        FirebaseToken firebaseToken = new FirebaseToken(task.getResult());
+                        lApi.sentFirebaseToken(username, firebaseToken, userToken, new PostCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+                            @Override
+                            public void onPostComplete(boolean registered) {
+                                if (!registered) {
+                                    Toast.makeText(LoginActivity.this, "Notification service failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
     }
 }
