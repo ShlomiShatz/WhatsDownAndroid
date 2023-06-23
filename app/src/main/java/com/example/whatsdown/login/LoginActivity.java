@@ -92,14 +92,15 @@ public class LoginActivity extends AppCompatActivity {
                             password.setError(null);
                             password.setErrorEnabled(false);
                             String token = lApi.getToken();
-                            getAndSendFirebaseToken(lApi, userDits.getUsername(), token);
                             lApi.get(userDits.getUsername(), token, new PostCallback() {
                                 @Override
                                 public void onPostComplete(boolean registered) {
                                     if (registered) {
                                         runOnUiThread(() -> {
                                             CurrentUser curUser = lApi.getCurUser();
-                                            getAndSendFirebaseToken(lApi, userDits.getUsername(), token);
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                                getAndSendFirebaseToken(lApi, userDits.getUsername(), token);
+                                            }
                                             goToChats(curUser, token);
                                         });
                                     } else {
@@ -143,7 +144,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         FirebaseToken firebaseToken = new FirebaseToken(task.getResult());
                         lApi.sentFirebaseToken(username, firebaseToken, userToken, new PostCallback() {
-                            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
                             @Override
                             public void onPostComplete(boolean registered) {
                                 if (!registered) {
