@@ -35,7 +35,7 @@ public class PushNotifications extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             createNotificationChannel();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
-                    .setSmallIcon(R.mipmap.ic_message_recieved)
+                    .setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
