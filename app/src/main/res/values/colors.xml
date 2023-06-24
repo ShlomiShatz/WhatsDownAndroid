@@ -2,5 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FBF4AF</color>
+    <color name="yellow">#FFF9C8</color>
+    <color name="background">#68FFFFFF</color>
+    <color name="click_me_background">#7AFFD815</color>
+    <color name="click_me_text">#2196F3</color>
+    <color name="message_color">#C18FD3F3</color>
 </resources>

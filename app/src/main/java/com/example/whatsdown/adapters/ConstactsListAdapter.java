@@ -1,5 +1,6 @@
 package com.example.whatsdown.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,8 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
 
     ContactRepository contactRepository = new ContactRepository();
 
-    public ConstactsListAdapter(ContactListFragment context) {
-        mInflater = LayoutInflater.from(context.getContext());
+    public ConstactsListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override

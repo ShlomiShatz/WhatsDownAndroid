@@ -1,7 +1,10 @@
 package com.example.whatsdown;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +15,18 @@ import com.google.android.material.textfield.TextInputLayout;
 
 
 public class SettingActivity extends AppCompatActivity {
-    boolean mode;
+    boolean nightMode;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        Switch switchMode = (Switch)findViewById(R.id.switch1);
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("night", false);
+        if (nightMode){
+            switchMode.setChecked(true);
+        }
         Button exit = (Button)findViewById(R.id.exitSetting);
         exit.setOnClickListener(v -> finish());
 
@@ -29,8 +38,15 @@ public class SettingActivity extends AppCompatActivity {
             if (!port.isEmpty()){
                 ServerPath.setPath(port);
             }
-            Switch switchMode = (Switch)findViewById(R.id.switch1);
-            mode = switchMode.isChecked();
+            nightMode = switchMode.isChecked();
+            if (!nightMode){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                sharedPreferences.edit().putBoolean("night", false).apply();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                sharedPreferences.edit().putBoolean("night", true).apply();
+            }
+
         });
     }
 }

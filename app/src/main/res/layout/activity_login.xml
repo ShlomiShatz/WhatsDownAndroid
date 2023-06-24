@@ -5,12 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    style="@style/BACKGROUND">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
         android:orientation="vertical"
         tools:context=".login.LoginActivity">
 
@@ -88,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="#FFF9C8"
+                android:backgroundTint="@color/yellow"
                 android:padding="20dp"
                 android:onClick="onSubmitLogin"
                 android:layout_margin="50dp"
@@ -96,7 +95,7 @@
                 app:iconGravity="end"
                 app:iconPadding="0dp"
                 app:iconSize="50dp"
-                app:iconTint="@color/black" />
+                app:iconTint="@color/black"/>
 
         </LinearLayout>
 
@@ -104,9 +103,9 @@
             android:id="@+id/login_tvRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#7AFFD815"
+            android:background="@color/click_me_background"
             android:text="@string/login_tvRegistration"
-            android:textColor="#2196F3"
+            android:textColor="@color/click_me_text"
             android:textSize="20sp"
             android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

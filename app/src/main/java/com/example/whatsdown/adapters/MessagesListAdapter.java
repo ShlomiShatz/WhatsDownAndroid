@@ -1,5 +1,6 @@
 package com.example.whatsdown.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
     int sender_type = 1;
     int receiver_type = 2;
 
-    public MessagesListAdapter(ChatViewFragment context, String sender) {
-        mInflater = LayoutInflater.from(context.getContext());
+    public MessagesListAdapter(Context context, String sender) {
+        mInflater = LayoutInflater.from(context);
         sendUser = sender;
     }
 

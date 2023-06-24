@@ -58,7 +58,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
         viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         viewModel.setToken(token);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
-        adapter = new ConstactsListAdapter(this);
+        adapter = new ConstactsListAdapter(this.getContext());
         adapter.setOnItemClickListener(position -> {
             viewModel.setChatId(adapter.getContacts().get(position).getId());
             viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/BACKGROUND">
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".contact.AddContactActivity"
-    android:background="@drawable/background">
+        android:layout_gravity="center"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +34,8 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/setting"
-                app:srcCompat="@drawable/addcontact" />
+                app:srcCompat="@drawable/addcontact"
+               />
 
             <TextView
                 android:id="@+id/textView5"
@@ -36,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="60sp"
                 android:layout_marginStart="20dp"
-                android:text="@string/add_contact" />
+                android:text="@string/add_contact"
+                style="@style/TEXT"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +54,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/userName_addContact"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
@@ -57,7 +64,9 @@
                 app:endIconTint="@color/black"
                 app:hintTextColor="@color/black"
                 app:startIconDrawable="@mipmap/ic_contact_add"
-                app:startIconTint="@color/black">
+                app:startIconTint="@color/black"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -65,21 +74,22 @@
                     android:textCursorDrawable="@null"
                     android:textColor="@color/black"
                     android:inputType="text"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
         <Button
             android:id="@+id/saveContact"
+            style="@style/BUTTON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/yellow"
             android:layout_marginTop="80dp"
             android:padding="10dp"
             android:text="@string/add_contact"
-            android:textColor="@color/black"
             android:textSize="30sp" />
 
         <Button
@@ -89,10 +99,10 @@
             android:text="@string/back"
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/yellow"
-            android:drawableEnd="@drawable/exit_button"/>
+            android:drawableEnd="@drawable/exit_button"
+            style="@style/BUTTON"/>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

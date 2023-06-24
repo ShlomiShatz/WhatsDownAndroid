@@ -10,7 +10,7 @@ public class ChatViewModel extends ViewModel {
     private final MutableLiveData<String> chatId = new MutableLiveData<String>();
     private MutableLiveData<String> tokenLiveData = new MutableLiveData<String>();
     static String chatIdString;
-    private CurrentUser currentUser;
+    static private CurrentUser currentUser;
 
     public static String getChatIdString() {
         return chatIdString;
@@ -33,11 +33,11 @@ public class ChatViewModel extends ViewModel {
         return tokenLiveData;
     }
 
-    public void setCurrentUser(CurrentUser currentUser) {
-        this.currentUser = currentUser;
+    public static void setCurrentUser(CurrentUser currentUser1) {
+        currentUser = currentUser1;
     }
 
-    public CurrentUser getCurrentUser() {
+    public static CurrentUser getCurrentUser() {
         return currentUser;
     }
 }

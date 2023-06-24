@@ -44,8 +44,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
-                        android:text="@string/name_contact" />
+                        android:textSize="22sp"
+                        android:text="@string/name_contact"
+                        style="@style/TEXT"/>
 
                     <TextView
                         android:id="@+id/time"
@@ -53,15 +54,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:textSize="16sp"
-                        android:text="@string/last_message_time" />
+                        android:text="@string/last_message_time"
+                        style="@style/TEXT"/>
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/lastMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="@string/last_message" />
+                    android:textSize="20sp"
+                    android:text="@string/last_message"
+                    style="@style/TEXT"/>
             </LinearLayout>
         </LinearLayout>
 

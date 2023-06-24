@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.whatsdown.ContactListActivity;
+import com.example.whatsdown.Dao.LocalDatabase;
 import com.example.whatsdown.SettingActivity;
 import com.example.whatsdown.chat.ChatActivity;
 import com.example.whatsdown.contact.AddContactActivity;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LocalDatabase.setContext(this);
 
         username = findViewById(R.id.login_username);
         password = findViewById(R.id.login_password);
@@ -68,7 +71,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToChats(CurrentUser user, String token) {
-        Intent i = new Intent(this, ChatActivity.class);
+        /*i change ContactListActivity from chatActivity */
+        Intent i = new Intent(this, ContactListActivity.class);
         i.putExtra("CurrentUser", user);
         i.putExtra("Token", token);
         startActivity(i);
