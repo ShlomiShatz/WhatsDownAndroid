@@ -41,6 +41,7 @@ public class SettingActivity extends AppCompatActivity {
             String prevPath = ServerPath.getPath();
             if (!port.isEmpty()){
                 ServerPath.setPath(port);
+                sharedPreferences.edit().putString("path", port).apply();
             }
             nightMode = switchMode.isChecked();
             if (!nightMode){

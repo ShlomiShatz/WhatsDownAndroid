@@ -10,7 +10,7 @@ import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
 
 public class ServerPath {
-    private static String path = "http://192.168.197.91:5000/";
+    private static String path = "http://10.0.2.2:5000/";
 
     private ServerPath(){
         super();
