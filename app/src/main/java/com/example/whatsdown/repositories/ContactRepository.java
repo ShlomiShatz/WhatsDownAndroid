@@ -13,7 +13,6 @@ import com.example.whatsdown.api.PostCallback;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ContactRepository {

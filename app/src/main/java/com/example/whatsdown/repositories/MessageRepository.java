@@ -11,7 +11,6 @@ import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.api.ChatsAPI;
 import com.example.whatsdown.view_model.ChatViewModel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class MessageRepository {

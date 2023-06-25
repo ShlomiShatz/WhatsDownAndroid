@@ -10,7 +10,6 @@ import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.google.gson.Gson;
 
-
 import java.util.LinkedList;
 import java.util.List;
 

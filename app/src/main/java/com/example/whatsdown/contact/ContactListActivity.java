@@ -75,6 +75,7 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
     public void onResume() {
         super.onResume();
         if (!pathServer.equals(ServerPath.getPath())){
+            // add deletions?
             finish();
         }
     }

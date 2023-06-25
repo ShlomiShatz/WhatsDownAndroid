@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.whatsdown.objects.Message;
-import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.repositories.MessageRepository;
 
 import java.util.List;

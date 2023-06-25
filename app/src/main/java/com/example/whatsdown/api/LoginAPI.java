@@ -1,6 +1,5 @@
 package com.example.whatsdown.api;
 
-
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.UserDits;

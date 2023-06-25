@@ -1,11 +1,8 @@
 package com.example.whatsdown.view_model;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.whatsdown.contact.AddContactActivity;
 import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.repositories.ContactRepository;
 
@@ -45,9 +42,13 @@ public class ContactViewModel extends ViewModel {
         idsChatRepository.deleteFirebaseToken();
     }
 
-    public void delete(Contact contact) {idsChatRepository.delete(contact);}
+    public void delete(Contact contact) {
+        idsChatRepository.delete(contact);
+    }
 
-    public void reload() {idsChatRepository.reload();}
+    public void reload() {
+        idsChatRepository.reload();
+    }
     public void deleteAll() {
         idsChatRepository.deleteAll();
     }

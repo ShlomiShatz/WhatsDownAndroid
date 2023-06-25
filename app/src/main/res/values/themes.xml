@@ -24,8 +24,5 @@
         <item name="android:backgroundTint">@color/yellow</item>
         <item name="android:textColor">@color/black</item>
     </style>
-    <style name="REST_ITEMS">
-        <item name="android:background">@color/yellow</item>
-    </style>
 
 </resources>

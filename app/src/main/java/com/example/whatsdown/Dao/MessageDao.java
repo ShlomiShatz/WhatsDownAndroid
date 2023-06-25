@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.objects.Message;
 
 import java.util.List;

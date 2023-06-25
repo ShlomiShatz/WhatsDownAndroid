@@ -25,11 +25,5 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:tint">@color/white</item>
     </style>
-    <style name="REST_ITEMS">
-        <item name="android:background">@color/yellow</item>
-    </style>
-    <style name="ICONS_PHOTO">
-        <item name="android:tint">@color/white</item>
-    </style>
 
 </resources>
