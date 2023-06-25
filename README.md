@@ -27,10 +27,8 @@ The chatting area devides into two parts:
 - The left is the side of contacts - you can see your contacts and the last message in that chat, enter their individual chat by clicking on it and add more contacts (by pressing the button and entering their **username**). You cannot add yourself as a contact and you cannot add the same person twice.
 - The right side shows the chat itself, you can write messages to your contact and see what they write back. There is also a **delete** button that will delete the contact and all the messages between.  
 On the right top side there is a Log Out button, it will redirect you to the login page.  
-### Important Note
-The server uses web sockets to communicate, every message sent will appear in both of the chats, adding a person will make the chat appear on both sides, and **deletting a chat will erase the chat in BOTH sides**.  
 ## Running the app - Smartphone
-After running the server, install the app on your Android smartphone using Android Studio or a simiar software. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page.  
+After running the server, install the app on your Android smartphone using Android Studio or a simiar software. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page. Note that you will be asked for post-notification permissions. For the full app experience - please allow it.  
 ### Login Page
 To login, enter your username and password and press the login button. If both are correct, you will be redirected to the chatting page.  
 If either of those are wrong, you will be notified. If you are not registered, click on the link on the bottom to register.  
@@ -58,17 +56,19 @@ Notice the 3 dots on the top corner. Clicking on it will reveal a small menu wit
 - Go to the setting page - same one that was presented above.
 - Log out of the app - clicking this will move you to the login page. Make sure to log out properly every time you want to connect from another user!
 #### Chatting page - chat
-The right side shows the chat itself, you can write messages to your contact and see what they write back. There is also a **delete** button that will delete the contact and all the messages between.  
-On the right top side there is a Log Out button, it will redirect you to the login page.  
+After clicking on the contact, you will be redirected to the chatting area. Here, you can see the conversation between you and the contact. In order to write a message - enter it in the textfield and click on the *send* button. If the contact writes you a message - you will see it in real-time. In order to go back to the contact list, click the *arrow* button on top.  
 ### Important Note
-The server uses web sockets to communicate, every message sent will appear in both of the chats, adding a person will make the chat appear on both sides, and **deletting a chat will erase the chat in BOTH sides**.
+The server uses web sockets and Firebase to communicate, every message sent will appear in both of the chats, adding a person will make the chat appear on both sides, and **deletting a chat will erase the chat in BOTH sides**.
 ## Technologies Used
-This project contains front-end and back-end implementations, using:
+This project contains front-end, back-end and mobile implementations, using:
 - Javascript, HTML, CSS
 - Bootstrap
 - React
 - Socket.io
 - MongoDB (Mongoose)
-- NodeJS (Express)  
+- NodeJS (Express)
+- Java
+- Firebase
+- Android Rooms 
  
 The server was designed by MVC architecturea.  
