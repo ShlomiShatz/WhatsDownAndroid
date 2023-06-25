@@ -2,17 +2,14 @@ package com.example.whatsdown.contact;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.whatsdown.R;
 import com.example.whatsdown.view_model.ContactViewModel;
 import com.google.android.material.textfield.TextInputLayout;
-
 
 public class AddContactActivity extends AppCompatActivity {
 

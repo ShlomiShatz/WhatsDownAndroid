@@ -25,8 +25,8 @@ import com.example.whatsdown.api.ServerPath;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
-import com.example.whatsdown.SettingActivity;
-import com.example.whatsdown.adapters.ConstactsListAdapter;
+import com.example.whatsdown.login.SettingActivity;
+import com.example.whatsdown.adapters.ContactsListAdapter;
 import com.example.whatsdown.view_model.ContactViewModel;
 
 
@@ -40,7 +40,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
 
     private String pathServer = ServerPath.getPath();
 
-    private ConstactsListAdapter adapter;
+    private ContactsListAdapter adapter;
     public ContactListFragment(CurrentUser currentUser, String token) {
         this.currentUser = currentUser;
         this.token = token;
@@ -58,7 +58,7 @@ public class ContactListFragment extends Fragment implements PopupMenu.OnMenuIte
         viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         viewModel.setToken(token);
         RecyclerView listContacts = view.findViewById(R.id.contacts);
-        adapter = new ConstactsListAdapter(this.getContext());
+        adapter = new ContactsListAdapter(this.getContext());
         adapter.setOnItemClickListener(position -> {
             viewModel.setChatId(adapter.getContacts().get(position).getId());
             viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());

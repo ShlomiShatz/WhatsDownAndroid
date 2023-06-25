@@ -14,11 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.whatsdown.ContactListActivity;
+import com.example.whatsdown.contact.ContactListActivity;
 import com.example.whatsdown.Dao.LocalDatabase;
-import com.example.whatsdown.SettingActivity;
-import com.example.whatsdown.chat.ChatActivity;
-import com.example.whatsdown.contact.AddContactActivity;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.R;
 import com.example.whatsdown.objects.FirebaseToken;

@@ -34,17 +34,15 @@ public class MessageRepository {
     class MessageListData extends MutableLiveData<List<Message>> {
         public MessageListData() {
             super();
-            setValue(new LinkedList<>());
+            new Thread(()->{
+                messageListData.postValue(messageDao.get(ChatViewModel.getChatIdString()));
+            }).start();
+//            chatsAPI.getMessages();
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-
-            new Thread(()->{
-                messageListData.postValue(messageDao.get(ChatViewModel.getChatIdString()));
-            }).start();
-
             chatsAPI.getMessages();
         }
     }

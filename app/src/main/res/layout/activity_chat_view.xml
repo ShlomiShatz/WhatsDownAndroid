@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/BACKGROUND_CHAT"
-    tools:context=".ChatViewActivity">
+    tools:context=".chat.ChatViewActivity">
     <LinearLayout
         android:id="@+id/linearLayout2_activity"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.whatsdown;
+package com.example.whatsdown.contact;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.example.whatsdown.adapters.ConstactsListAdapter;
+import com.example.whatsdown.R;
+import com.example.whatsdown.login.SettingActivity;
+import com.example.whatsdown.adapters.ContactsListAdapter;
 import com.example.whatsdown.api.ServerPath;
-import com.example.whatsdown.contact.AddContactActivity;
+import com.example.whatsdown.chat.ChatViewActivity;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
@@ -30,7 +31,7 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
 
     private String pathServer = ServerPath.getPath();
 
-    private ConstactsListAdapter adapter;
+    private ContactsListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         viewModel.setToken(token);
         RecyclerView listContacts = findViewById(R.id.contacts_activity);
-        adapter = new ConstactsListAdapter(this);
+        adapter = new ContactsListAdapter(this);
         adapter.setOnItemClickListener(position -> {
             viewModel.setChatId(adapter.getContacts().get(position).getId());
             viewModel.setCurrentUser(adapter.getContacts().get(position).getUser());

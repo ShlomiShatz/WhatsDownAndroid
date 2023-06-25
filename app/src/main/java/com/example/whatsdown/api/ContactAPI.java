@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.whatsdown.Dao.ContactDao;
 import com.example.whatsdown.Dao.MessageDao;
 import com.example.whatsdown.contact.Contact;
-import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.objects.Username;
 
 import java.util.ArrayList;

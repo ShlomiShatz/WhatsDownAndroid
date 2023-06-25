@@ -7,7 +7,7 @@ import com.example.whatsdown.repositories.ContactRepository;
 import com.example.whatsdown.repositories.MessageRepository;
 
 public class ServerPath {
-    private static String path = "http://10.0.2.2:5000/";
+    private static String path = "http://192.168.197.91:5000/";
 
     private ServerPath(){
         super();

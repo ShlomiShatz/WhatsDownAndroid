@@ -1,26 +1,28 @@
-package com.example.whatsdown;
+package com.example.whatsdown.chat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.whatsdown.R;
 import com.example.whatsdown.adapters.MessagesListAdapter;
-import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class ChatViewActivity extends AppCompatActivity {
     private ChatViewModel viewModel;
-    private MessageViewModel messageViewModel;
+    private static MessageViewModel messageViewModel;
+
+    public static MessageViewModel getMessageViewModel() {
+        return messageViewModel;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

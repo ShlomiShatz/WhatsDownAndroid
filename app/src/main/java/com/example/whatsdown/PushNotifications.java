@@ -21,10 +21,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsdown.chat.ChatActivity;
+import com.example.whatsdown.chat.ChatViewActivity;
+import com.example.whatsdown.contact.ContactListActivity;
+import com.example.whatsdown.login.LoginActivity;
 import com.example.whatsdown.login.MainActivity;
 import com.example.whatsdown.repositories.MessageRepository;
+import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -38,8 +43,8 @@ public class PushNotifications extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {
             createNotificationChannel();
-            Intent intent = new Intent(this, ChatActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
+            Intent intent = new Intent(this, ContactListActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
                     .setSmallIcon(R.mipmap.ic_launcher_foreground)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
@@ -56,20 +61,17 @@ public class PushNotifications extends FirebaseMessagingService {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
+            ChatViewActivity.getMessageViewModel().reload();
         }
     }
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("1", name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

@@ -27,11 +27,7 @@ public class ChatsAPI {
     WebServiceAPI webServiceAPI;
     MessageDao messageDao;
     ContactDao contactDao;
-    //List<Message> messageList;
     MutableLiveData<List<Message>> listMessages;
-
-
-
 
     public ChatsAPI(MutableLiveData<List<Message>> listMessage, MessageDao mDao, ContactDao cDao) {
         // FOR DEBUGGING*****************************************************
@@ -51,7 +47,6 @@ public class ChatsAPI {
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
-
 
     public void getMessages() {
         Call<List<Message>> call = webServiceAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken());

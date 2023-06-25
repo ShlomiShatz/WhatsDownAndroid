@@ -13,14 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.R;
 import com.example.whatsdown.adapters.MessagesListAdapter;
-import com.example.whatsdown.api.ChatsAPI;
-import com.example.whatsdown.api.LoginAPI;
-import com.example.whatsdown.api.PostCallback;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.android.material.textfield.TextInputEditText;

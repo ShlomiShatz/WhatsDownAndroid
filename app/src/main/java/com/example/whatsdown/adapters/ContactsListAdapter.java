@@ -8,15 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.whatsdown.contact.Contact;
-import com.example.whatsdown.contact.ContactListFragment;
 import com.example.whatsdown.R;
 import com.example.whatsdown.repositories.ContactRepository;
-
 import java.util.List;
 
-public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdapter.ContactViewHolder> {
+public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
     //can i use this
     private OnItemClickListener onItemClickListener;
 
@@ -65,7 +62,7 @@ public class ConstactsListAdapter extends RecyclerView.Adapter<ConstactsListAdap
 
     ContactRepository contactRepository = new ContactRepository();
 
-    public ConstactsListAdapter(Context context) {
+    public ContactsListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 

@@ -25,16 +25,16 @@
         </service>
 
         <activity
-            android:name=".ContactListActivity"
+            android:name=".contact.ContactListActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatViewActivity"
+            android:name=".chat.ChatViewActivity"
             android:exported="false" />
         <activity
             android:name=".contact.AddContactActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".login.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".chat.ChatActivity"
