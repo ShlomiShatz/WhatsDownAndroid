@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.whatsdown.Dao.ContactDao;
 import com.example.whatsdown.Dao.MessageDao;
 import com.example.whatsdown.contact.Contact;
+import com.example.whatsdown.objects.ChatOfUser;
+import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.Username;
+import com.example.whatsdown.view_model.ChatViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +55,14 @@ public class ContactAPI {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                 if(response.code() == 200) {
-                    listContact.postValue(response.body());
+                    List<Contact> list = response.body();
+                    for (Contact contact: list) {
+                        ChatOfUser chatOfUser = new ChatOfUser(ChatViewModel.getLoginUser().getUsername(), contact.getId());
+                        contact.setChatOfUser(chatOfUser);
+                    }
+                    listContact.postValue(list);
                     new Thread(()->{
-                        contactDao.insertListReplace(response.body());
+                        contactDao.insertListReplace(list);
                     }).start();
                 } else {
                     listContact.postValue(new ArrayList<>());
@@ -67,7 +75,8 @@ public class ContactAPI {
             }
         });
     }
-    public void add(String username, PostCallback callback) {
+    public void
+    add(String username, PostCallback callback) {
         Username userNameObj = new Username(username);
         Call<Contact> call = webServiceAPI.addContact(LoginAPI.getToken(), userNameObj);
         call.enqueue(new Callback<Contact>() {
@@ -75,6 +84,8 @@ public class ContactAPI {
             public void onResponse(Call<Contact> call, Response<Contact> response) {
                 if(response.code() == 200) {
                     Contact contact = response.body();
+                    ChatOfUser chatOfUser = new ChatOfUser(ChatViewModel.getLoginUser().getUsername(),contact.getId());
+                    contact.setChatOfUser(chatOfUser);
                     List<Contact> contacts = listContact.getValue();
                     contacts.add(contact);
                     listContact.postValue(contacts);
@@ -110,6 +121,22 @@ public class ContactAPI {
                         messageDao.deleteByChatId(chatId);
                     }).start();
                 }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void deleteFirebase() {
+        Call<Void> call = webServiceAPI.sendFirebaseToken(ChatViewModel.getLoginUser().getUsername(), LoginAPI.getToken(), new FirebaseToken(""));
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
             }
 
             @Override

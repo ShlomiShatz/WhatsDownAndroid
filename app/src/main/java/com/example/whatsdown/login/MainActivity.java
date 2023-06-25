@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+        String serverPath = sharedPreferences.getString("path", "http://10.0.2.2:5000/");
 
         Button btnStart = findViewById(R.id.main_button);
         btnStart.setOnClickListener(v -> {

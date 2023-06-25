@@ -2,6 +2,7 @@ package com.example.whatsdown.Dao;
 
 import androidx.room.TypeConverter;
 
+import com.example.whatsdown.objects.ChatOfUser;
 import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.LastMessage;
 import com.google.gson.Gson;
@@ -22,6 +23,15 @@ public class Converters {
     @TypeConverter
     public LastMessage fromStringToLastMessage(String stringLastMsg){
         return new Gson().fromJson(stringLastMsg, LastMessage.class);
+    }
+
+    @TypeConverter
+    public String fromChatOfUserToString(ChatOfUser chatOfUser){
+        return new Gson().toJson(chatOfUser);
+    }
+    @TypeConverter
+    public ChatOfUser fromStringToChatOfUser(String stringChatOfUser){
+        return new Gson().fromJson(stringChatOfUser, ChatOfUser.class);
     }
 
 }

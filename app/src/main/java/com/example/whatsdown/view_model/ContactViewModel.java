@@ -16,14 +16,17 @@ public class ContactViewModel extends ViewModel {
     public interface AddContactCallback {
         void onContactAdded(boolean success);
     }
-    private ContactRepository idsChatRepository;
+    private static ContactRepository idsChatRepository;
     private LiveData<List<Contact>> contacts;
     private String token;
 
     public ContactViewModel(){
-//        this.token = token;
         idsChatRepository = new ContactRepository();
         contacts = idsChatRepository.getAll();
+    }
+
+    public static ContactRepository getIdsChatRepository() {
+        return idsChatRepository;
     }
 
     public void setToken(String token) {
@@ -38,7 +41,14 @@ public class ContactViewModel extends ViewModel {
         idsChatRepository.add(username, callback);
     }
 
+    public void deleteFirebaseToken() {
+        idsChatRepository.deleteFirebaseToken();
+    }
+
     public void delete(Contact contact) {idsChatRepository.delete(contact);}
 
     public void reload() {idsChatRepository.reload();}
+    public void deleteAll() {
+        idsChatRepository.deleteAll();
+    }
 }

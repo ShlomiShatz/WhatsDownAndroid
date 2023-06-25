@@ -55,9 +55,12 @@ public class ContactRepository {
         }
     }
 
-
     public LiveData<List<Contact>> getAll(){
         return contactListData;
+    }
+
+    public void deleteFirebaseToken() {
+        contactAPI.deleteFirebase();
     }
 
     public void add(String username, ContactViewModel.AddContactCallback callback) {

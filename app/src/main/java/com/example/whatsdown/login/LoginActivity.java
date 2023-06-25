@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -98,6 +100,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onPostComplete(boolean registered) {
                     if (registered) {
                         runOnUiThread(() -> {
+                            SharedPreferences sharedPreferences;
+                            sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+                            String userTokenName = sharedPreferences.getString("usernameLogin", "");
+                            if (!userTokenName.equals("") && !userTokenName.equals(username.getEditText().getText().toString())) {
+                                username.setError("A user is already connected. Please logout before others login");
+                                return;
+                            }
+                            sharedPreferences.edit().putString("usernameLogin", username.getEditText().getText().toString()).apply();
                             username.setError(null);
                             username.setErrorEnabled(false);
                             password.setError(null);

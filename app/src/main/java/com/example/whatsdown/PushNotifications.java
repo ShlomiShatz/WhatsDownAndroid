@@ -29,6 +29,8 @@ import com.example.whatsdown.contact.ContactListActivity;
 import com.example.whatsdown.login.LoginActivity;
 import com.example.whatsdown.login.MainActivity;
 import com.example.whatsdown.repositories.MessageRepository;
+import com.example.whatsdown.view_model.ChatViewModel;
+import com.example.whatsdown.view_model.ContactViewModel;
 import com.example.whatsdown.view_model.MessageViewModel;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -61,7 +63,12 @@ public class PushNotifications extends FirebaseMessagingService {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
-            ChatViewActivity.getMessageViewModel().reload();
+            if (ContactViewModel.getIdsChatRepository() != null) {
+                ContactViewModel.getIdsChatRepository().reload();
+            }
+            if (ChatViewActivity.getMessageViewModel() != null && ChatViewModel.getChatIdString() != null) {
+                ChatViewActivity.getMessageViewModel().reload();
+            }
         }
     }
 

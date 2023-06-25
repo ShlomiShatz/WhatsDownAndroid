@@ -32,4 +32,7 @@ public class MessageViewModel extends ViewModel {
     public void reload() {
         messageRepository.reload();
     }
+    public void deleteAll(){
+        messageRepository.deleteAll();
+    }
 }

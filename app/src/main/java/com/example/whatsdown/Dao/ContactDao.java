@@ -22,6 +22,10 @@ public interface ContactDao {
     @Query("SELECT * FROM contact WHERE id = :id")
     List<Contact> get(String id);
 
+    @Query("SELECT * FROM contact WHERE user = :username")
+    List<Contact> getByUserName(String username);
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertReplace(Contact... contacts);
 

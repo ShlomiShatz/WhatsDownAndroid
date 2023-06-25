@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -85,6 +87,10 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
             startActivity(i);
             return true;
         } else if (itemId == R.id.logout_menu) {
+            contactViewModel.deleteFirebaseToken();
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+            sharedPreferences.edit().putString("usernameLogin", "").apply();
             this.finish();
             return true;
         } else if (itemId == R.id.setting_menu) {
