@@ -37,7 +37,7 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
         Intent i = getIntent();
-        currentUser = (CurrentUser) i.getSerializableExtra("CurrentUser");
+        currentUser = ChatViewModel.getLoginUser();
         token = i.getStringExtra("Token");
         TextView tv = findViewById(R.id.contact_list_username_activity);
         tv.setText(currentUser.getDisplayName());
@@ -53,8 +53,6 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
             Intent intent = new Intent(this, ChatViewActivity.class);
             startActivity(intent);
         });
-
-
 
         ImageButton btnMenu = findViewById(R.id.menu_contact_list_activity);
         btnMenu.setOnClickListener(v -> {

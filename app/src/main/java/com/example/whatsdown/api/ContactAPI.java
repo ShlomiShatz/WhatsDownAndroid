@@ -68,7 +68,7 @@ public class ContactAPI {
             }
         });
     }
-    public void add( String username, PostCallback callback) {
+    public void add(String username, PostCallback callback) {
         Username userNameObj = new Username(username);
         Call<Contact> call = webServiceAPI.addContact(LoginAPI.getToken(), userNameObj);
         call.enqueue(new Callback<Contact>() {

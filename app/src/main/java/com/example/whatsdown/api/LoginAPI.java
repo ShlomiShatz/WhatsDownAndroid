@@ -1,7 +1,13 @@
 package com.example.whatsdown.api;
 
+import androidx.annotation.NonNull;
+
 import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.UserDits;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -78,6 +84,26 @@ public class LoginAPI {
 
             @Override
             public void onFailure(Call<CurrentUser> call, Throwable t) {
+                t.printStackTrace();
+                callback.onPostComplete(false);
+            }
+        });
+    }
+
+    public void sentFirebaseToken(String username, FirebaseToken firebaseToken, String userToken, PostCallback callback) {
+        Call<Void> call = webServiceAPI.sendFirebaseToken(username, userToken, firebaseToken);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 200) {
+                    callback.onPostComplete(true);
+                } else {
+                    callback.onPostComplete(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 t.printStackTrace();
                 callback.onPostComplete(false);
             }
