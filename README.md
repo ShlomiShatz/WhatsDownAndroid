@@ -28,7 +28,7 @@ The chatting area devides into two parts:
 - The right side shows the chat itself, you can write messages to your contact and see what they write back. There is also a **delete** button that will delete the contact and all the messages between.  
 On the right top side there is a Log Out button, it will redirect you to the login page.  
 ## Running the app - Smartphone
-After running the server, install the app on your Android smartphone using Android Studio or a simiar software. Make sure to sync the gradle files before running the project. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page. Note that you will be asked for post-notification permissions. For the full app experience - please allow it.  
+Note - Android API must be 33 and above in order for the app to run. Now, After running the server, install the app on your Android smartphone using Android Studio or a simiar software. Make sure to sync the gradle files before running the project. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page. Note that you will be asked for post-notification permissions. For the full app experience - please allow it.  
 ### Login Page
 To login, enter your username and password and press the login button. If both are correct, you will be redirected to the chatting page.  
 If either of those are wrong, you will be notified. If you are not registered, click on the link on the bottom to register.  
