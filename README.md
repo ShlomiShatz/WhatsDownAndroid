@@ -57,8 +57,10 @@ Notice the 3 dots on the top corner. Clicking on it will reveal a small menu wit
 - Log out of the app - clicking this will move you to the login page. Make sure to log out properly every time you want to connect from another user!
 #### Chatting page - chat
 After clicking on the contact, you will be redirected to the chatting area. Here, you can see the conversation between you and the contact. In order to write a message - enter it in the textfield and click on the *send* button. If the contact writes you a message - you will see it in real-time. In order to go back to the contact list, click the *arrow* button on top.  
-### Important Note
-The server uses web sockets and Firebase to communicate, every message sent will appear in both of the chats, adding a person will make the chat appear on both sides, and **deletting a chat will erase the chat in BOTH sides**.
+### Important Notes
+- The server uses web sockets and Firebase to communicate, every message sent will appear in both of the chats, adding a person will make the chat appear on both sides, and **deletting a chat will erase the chat in BOTH sides**.  
+- Furthermore, on the mobile app - if a user logged into the app and did not log out properly (clicked on the *Log-out* option), you will not be able to log in as a different user on the same device, until the logged user will log back in and log out properly.
+- Changing the server path on *settings* causes the local database to be deleted.  
 ## Technologies Used
 This project contains front-end, back-end and mobile implementations, using:
 - Javascript, HTML, CSS
