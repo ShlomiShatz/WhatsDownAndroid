@@ -35,10 +35,10 @@ public class PushNotifications extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             String messageReceived = remoteMessage.getNotification().getBody();
             char type = messageReceived.charAt(0);
+            messageReceived = messageReceived.substring(1);
             switch (type) {
                 case 'm':
                 case 'a':
-                    messageReceived = messageReceived.substring(1);
                     createNotificationChannel();
                     Intent intent = new Intent(this, ContactListActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
@@ -72,6 +72,9 @@ public class PushNotifications extends FirebaseMessagingService {
                     if (ChatViewActivity.getMessageViewModel() != null && ChatViewModel.getChatIdString() != null) {
                         ChatViewActivity.getMessageViewModel().reload();
                     }
+                    if (messageReceived.equals(ChatViewModel.getCurrentUser().getUsername())) {
+                        ChatViewActivity.getActivity().finish();
+                    }
                     break;
             }
         }
@@ -90,4 +93,7 @@ public class PushNotifications extends FirebaseMessagingService {
     }
 
 
+//    private boolean isDeleted() {
+//
+//    }
 }

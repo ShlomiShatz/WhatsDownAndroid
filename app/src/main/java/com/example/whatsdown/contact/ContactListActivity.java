@@ -31,7 +31,6 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
     private ChatViewModel viewModel;
     private ContactViewModel contactViewModel;
     private String token;
-
     private String pathServer = ServerPath.getPath();
 
     private ContactsListAdapter adapter;
@@ -81,7 +80,6 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
     public void onResume() {
         super.onResume();
         if (!pathServer.equals(ServerPath.getPath())){
-            // add deletions?
             finish();
         }
     }

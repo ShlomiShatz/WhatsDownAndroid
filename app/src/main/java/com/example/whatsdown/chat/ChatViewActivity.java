@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class ChatViewActivity extends AppCompatActivity {
     private ChatViewModel viewModel;
     private static MessageViewModel messageViewModel;
-
+    public static ChatViewActivity activity;
     public static MessageViewModel getMessageViewModel() {
         return messageViewModel;
     }
@@ -27,6 +28,7 @@ public class ChatViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.activity_chat_view);
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         ImageButton back = findViewById(R.id.back_activity);
@@ -62,10 +64,13 @@ public class ChatViewActivity extends AppCompatActivity {
             if (!msg.isEmpty()){
                 input.setText("");
             }
-
         });
-
     }
+
+    public static ChatViewActivity getActivity() {
+        return activity;
+    }
+
     private void scrollDown(MessagesListAdapter messagesListAdapter ){
         RecyclerView recyclerView = findViewById(R.id.allMsg_activity); // Replace with your RecyclerView ID
         recyclerView.post(() -> recyclerView.scrollToPosition(messagesListAdapter.getItemCount() - 1));

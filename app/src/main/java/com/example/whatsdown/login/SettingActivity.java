@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.whatsdown.Dao.LocalDatabase;
 import com.example.whatsdown.R;
 import com.example.whatsdown.api.ServerPath;
 import com.google.android.material.textfield.TextInputLayout;
@@ -39,9 +40,14 @@ public class SettingActivity extends AppCompatActivity {
             EditText boxPort = ((TextInputLayout)findViewById(R.id.portServerSetting)).getEditText();
             String port = boxPort.getText().toString();
             String prevPath = ServerPath.getPath();
-            if (!port.isEmpty()){
+            if (!port.isEmpty() && !prevPath.equals(port)){
                 ServerPath.setPath(port);
                 sharedPreferences.edit().putString("path", port).apply();
+                new Thread(() -> {
+                    LocalDatabase.getInstance().contactDao().deleteAll();
+                    LocalDatabase.getInstance().messageDao().deleteAll();
+                }).start();
+
             }
             nightMode = switchMode.isChecked();
             if (!nightMode){
