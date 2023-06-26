@@ -1,20 +1,18 @@
 package com.example.whatsdown.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.whatsdown.ChatViewFragment;
-import com.example.whatsdown.Message;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.R;
-
 import java.util.List;
 
 public class MessagesListAdapter extends RecyclerView.Adapter {
-
 
     class ReceiveViewHolder extends RecyclerView.ViewHolder {
         private final TextView sender;
@@ -45,14 +43,16 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
     private final LayoutInflater mInflater;
     private List<Message> messages;
 
-    private String sendUser;
+    private CurrentUser sendUser;
+    private CurrentUser receiveUser;
 
     int sender_type = 1;
     int receiver_type = 2;
 
-    public MessagesListAdapter(ChatViewFragment context, String sender) {
-        mInflater = LayoutInflater.from(context.getContext());
+    public MessagesListAdapter(Context context, CurrentUser sender, CurrentUser receiver) {
+        mInflater = LayoutInflater.from(context);
         sendUser = sender;
+        receiveUser = receiver;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
         if (holder.getClass() == SenderViewHolder.class) {
             if (messages != null) {
                 final Message current = messages.get(position);
-                ((SenderViewHolder) holder).sender.setText(current.getSender().getDisplayName());
+                ((SenderViewHolder) holder).sender.setText(sendUser.getDisplayName());
                 ((SenderViewHolder) holder).content.setText(current.getContent());
                 ((SenderViewHolder) holder).time.setText(current.getCreated());
             }
@@ -81,7 +81,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
         if (holder.getClass() == ReceiveViewHolder.class) {
             if (messages != null) {
                 final Message current = messages.get(position);
-                ((ReceiveViewHolder) holder).sender.setText(current.getSender().getDisplayName());
+                ((ReceiveViewHolder) holder).sender.setText(receiveUser.getDisplayName());
                 ((ReceiveViewHolder) holder).content.setText(current.getContent());
                 ((ReceiveViewHolder) holder).time.setText(current.getCreated());
             }
@@ -97,9 +97,6 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
         return messages;
     }
 
-    public void setSendUser(String sendUser) {
-        this.sendUser = sendUser;
-    }
 
     @Override
     public int getItemCount() {
@@ -109,7 +106,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter {
     }
 
     public int getItemViewType(int position) {
-        if (messages.get(position).getSender().getDisplayName().equals(sendUser)) {
+        if (messages.get(position).getSender().getDisplayName().equals(sendUser.getDisplayName())) {
             return sender_type;
         } else {
             return receiver_type;

@@ -1,15 +1,18 @@
 package com.example.whatsdown.api;
 
-import com.example.whatsdown.Contact;
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.Message;
-import com.example.whatsdown.Msg;
-import com.example.whatsdown.repositories.ContactRepository;
+import androidx.lifecycle.MutableLiveData;
 
+import com.example.whatsdown.Dao.ContactDao;
+import com.example.whatsdown.Dao.MessageDao;
+import com.example.whatsdown.objects.LastMessage;
+import com.example.whatsdown.objects.Message;
+import com.example.whatsdown.objects.Msg;
+import com.example.whatsdown.view_model.ChatViewModel;
+import com.google.gson.Gson;
+
+import java.util.LinkedList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,114 +22,85 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChatsAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
-    List<Contact> list;
-    List<Message> messageList;
+    MessageDao messageDao;
+    ContactDao contactDao;
+    MutableLiveData<List<Message>> listMessages;
 
-    public List<Contact> getList() {
-        return list;
-    }
-
-    public List<Message> getMessageList() {
-        return messageList;
-    }
-
-    public ChatsAPI() {
-        // FOR DEBUGGING*****************************************************
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-        // TILL HERE*************************************************************
-
+    public ChatsAPI(MutableLiveData<List<Message>> listMessage, MessageDao mDao, ContactDao cDao) {
+        this.listMessages = listMessage;
+        this.messageDao = mDao;
+        this.contactDao = cDao;
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)// FOR DEBUGGING********************************************************
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
-    public void get(String tokenToSend, PostCallback callback) {
-        Call<List<Contact>> call = webServiceAPI.getChatList(tokenToSend);
-        call.enqueue(new Callback<List<Contact>>() {
-            @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                if(response.code() == 200) {
-                    list = response.body();
-                    callback.onPostComplete(true);
-                } else {
-                    callback.onPostComplete(false);
-                }
-            }
+    public void getMessages() {
+        if (ChatViewModel.getChatIdString() != null) {
+            Call<List<Message>> call = webServiceAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken());
+            call.enqueue(new Callback<List<Message>>() {
+                @Override
+                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                    if (response.code() == 200) {
+                        List<Message> lst = response.body();
+                        for (Message msg : lst) {
+                            msg.setChatId(ChatViewModel.getChatIdString());
+                        }
+                        listMessages.postValue(lst);
+                        new Thread(() -> {
+                            messageDao.insertListReplace(lst);
+                        }).start();
 
-            @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+                    } else {
+                        listMessages.postValue(new LinkedList<Message>());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Message>> call, Throwable t) {
+                    t.printStackTrace();
+                    listMessages.postValue(new LinkedList<Message>());
+                }
+            });
+        }
     }
 
-    public void add(String tokenToSend, String username, PostCallback callback) {
-        Call<Void> call = webServiceAPI.addContact(tokenToSend, username);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 200) {
-                    callback.onPostComplete(true);
-                } else {
-                    callback.onPostComplete(false);
+    public void sendMessage(Msg msg) {
+        if (ChatViewModel.getChatIdString() != null) {
+            Call<Message> call = webServiceAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), msg);
+            call.enqueue(new Callback<Message>() {
+                @Override
+                public void onResponse(Call<Message> call, Response<Message> response) {
+                    if(response.code() == 200) {
+                        Message newMsg = response.body();
+                        newMsg.setChatId(ChatViewModel.getChatIdString());
+                        LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
+                        String stringLstMsg = new Gson().toJson(lstMsg);
+                        List<Message> lstMessages = listMessages.getValue();
+                        lstMessages.add(newMsg);
+                        listMessages.postValue(lstMessages);
+                        new Thread(()->{
+                            messageDao.insert(newMsg);
+                        }).start();
+                        new Thread(()->{
+                            contactDao.updateLastMessage(stringLstMsg, ChatViewModel.getChatIdString());
+                        }).start();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+                @Override
+                public void onFailure(Call<Message> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
-    public void getMessages(String id, String tokenToSend, PostCallback callback) {
-        Call<List<Message>> call = webServiceAPI.getMessages(id, tokenToSend);
-        call.enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                if(response.code() == 200) {
-                    messageList = response.body();
-                    callback.onPostComplete(true);
-                } else {
-                    callback.onPostComplete(false);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+    public void deleteAll() {
+        new Thread(()->{
+            messageDao.deleteAll();
+        }).start();
     }
-
-    public void sendMessage(String id, String tokenToSend, Msg msg, PostCallback callback) {
-        Call<Void> call = webServiceAPI.sendMessage(id, tokenToSend, msg);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 200) {
-                    callback.onPostComplete(true);
-                } else {
-                    callback.onPostComplete(false);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
-    }
-
 }

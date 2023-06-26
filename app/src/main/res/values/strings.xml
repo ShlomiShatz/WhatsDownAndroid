@@ -2,25 +2,21 @@
 
 
     <string name="app_name">WhatsDown</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="userName">userName</string>
-    <string name="setting">setting</string>
+    <string name="setting">Setting</string>
     <string name="user_account_image">userAccountImage</string>
-    <string name="and_contact">and contact</string>
     <string name="name_contact">name contact</string>
     <string name="last_message_time">last message time</string>
     <string name="last_message">last message</string>
-    <string name="back">back</string>
+    <string name="back">Back</string>
     <string name="nothing">.</string>
     <string name="send">send</string>
-    <string name="enter_text">enter text</string>
+    <string name="enter_text">Enter message...</string>
     <string name="sender">sender</string>
     <string name="content">content</string>
     <string name="time">time</string>
     <string name="login_etUsername">Username</string>
     <string name="login_etPassword">Password</string>
-    <string name="login_btnLogin">Login</string>
     <string name="main_btnStart">Start</string>
     <string name="main_tvLogo">What\'s Down</string>
     <string name="login_tvRegistration">Not registered? <u>click here!</u></string>
@@ -30,8 +26,14 @@
     <string name="register_uploadimage">Upload Image</string>
     <string name="register_ivRegisterText">REGISTER</string>
     <string name="register_ivProfilePicture">PROFILE PICTURE</string>
-    <string name="logout">logout</string>
-    <string name="add_contact">add contact</string>
-    <string name="menu_contact_list">menu contact list</string>
+    <string name="logout">Logout</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="menu_contact_list">Menu Contact List</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="enter_contact_username">Enter contact username</string>
+    <string name="channel_name">Message recieved!</string>
+    <string name="channel_description">Recieved a message from WhatsDown</string>
+    <string name="path_server">Path to Server</string>
 
 </resources>

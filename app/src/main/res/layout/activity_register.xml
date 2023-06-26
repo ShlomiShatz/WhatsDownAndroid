@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    style="@style/BACKGROUND">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".RegisterActivity">
+        tools:context=".login.RegisterActivity">
         <ImageView
             android:id="@+id/register_icon"
             android:layout_width="match_parent"
@@ -142,11 +142,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="#FFF9C8"
                 android:padding="20dp"
                 android:text="@string/register_uploadimage"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                style="@style/BUTTON"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btnRegister"
@@ -154,13 +153,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="#FFF9C8"
                 android:padding="20dp"
                 android:onClick="onSubmitRegister"
                 app:icon="@drawable/registration"
                 app:iconPadding="0dp"
                 app:iconSize="50dp"
-                app:iconTint="@color/black" />
+                app:iconTint="@color/black"
+                style="@style/BUTTON"/>
 
             <TextView
                 android:id="@+id/register_tvLogin"
@@ -168,9 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="#7AFFD815"
+                android:background="@color/click_me_background"
                 android:text="@string/register_gotologin"
-                android:textColor="#2196F3"
+                android:textColor="@color/click_me_text"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

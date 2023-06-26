@@ -1,10 +1,5 @@
 package com.example.whatsdown.api;
 
-import com.example.whatsdown.R;
-import android.content.Context;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,17 +11,9 @@ public class RegisterAPI {
     WebServiceAPI webServiceAPI;
 
     public RegisterAPI() {
-        // FOR DEBUGGING*****************************************************
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-        // TILL HERE*************************************************************
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)// FOR DEBUGGING********************************************************
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }

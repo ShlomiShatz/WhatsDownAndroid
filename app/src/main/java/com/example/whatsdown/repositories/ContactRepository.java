@@ -1,67 +1,62 @@
 package com.example.whatsdown.repositories;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.Contact;
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.R;
-import com.example.whatsdown.api.ChatsAPI;
-import com.example.whatsdown.api.LoginAPI;
+import com.example.whatsdown.Dao.ContactDao;
+import com.example.whatsdown.Dao.LocalDatabase;
+import com.example.whatsdown.Dao.MessageDao;
+import com.example.whatsdown.api.ContactAPI;
+import com.example.whatsdown.contact.Contact;
+
 import com.example.whatsdown.api.PostCallback;
 
+import com.example.whatsdown.view_model.ChatViewModel;
+import com.example.whatsdown.view_model.ContactViewModel;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 import java.util.List;
 
 public class ContactRepository {
     private ContactListData contactListData;
-    //    private ContactDao contactDao;
-    private List<Contact> list;
-    private ChatsAPI chatsAPI;
-    private String token;
-
-
+    private ContactDao contactDao;
+    private MessageDao messageDao;
+    private ContactAPI contactAPI;
     public ContactRepository(){
-        //LocalDatabase db = LocalDatabase.getInstance();
-        //contactDao = db.contactDao();
-        chatsAPI = new ChatsAPI();
-        token = LoginAPI.getToken();
+        LocalDatabase db = LocalDatabase.getInstance();
+        contactDao = db.contactDao();
+        messageDao = db.messageDao();
         contactListData = new ContactListData();
+        contactAPI = new ContactAPI(contactListData, contactDao, messageDao);
     }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
-            //super();
-            chatsAPI.get(token, new PostCallback() {
-                @Override
-                public void onPostComplete(boolean registered) {
-                    if (registered) {
-                        if (chatsAPI.getList().size() > 0) {
-                            list = chatsAPI.getList();
-                            setValue(list);
-                        }
-                    } else {
-                        setValue(new LinkedList<>());
-                    }
-                }
-            });
-            setValue(list);
+            super();
+            new Thread(()->{
+                getContactsFromRoom();
+                contactAPI.get();
+            }).start();
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-
-            /*new Thread(()->{
-                contactListData.contactValue(contactDao.get());
+            new Thread(()->{
+                getContactsFromRoom();
             }).start();
-             */
+        }
+
+        protected void getContactsFromRoom(){
+            List<Contact> lst = contactDao.index();
+            List<Contact> newLst = new ArrayList<>();
+            for (Contact contact:lst) {
+                if (contact.getChatOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())){
+                    newLst.add(contact);
+                }
+            }
+            postValue(newLst);
         }
     }
 
@@ -69,26 +64,41 @@ public class ContactRepository {
         return contactListData;
     }
 
-    public void add(String username){
-        chatsAPI.add(token, username, new PostCallback() {
+    public void deleteFirebaseToken() {
+        contactAPI.deleteFirebase();
+    }
+
+    public void add(String username, ContactViewModel.AddContactCallback callback) {
+        List<Contact> lst = getAll().getValue();
+        for (Contact contactElement:lst) {
+            if (contactElement.getChatOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())){
+                if(contactElement.getUser().getUsername().equals(username)) {
+                    callback.onContactAdded(false);
+                    return;
+                }
+            }
+        }
+        contactAPI.add(username, new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
                 if (registered) {
-                    reload();
+                    callback.onContactAdded(true);
                 } else {
-                    //error
+                    callback.onContactAdded(false);
                 }
             }
         });
     }
 
     public void delete(final Contact contact){
-        //chatsAPI.delete(contact);
+        contactAPI.delete(contact.getId());
+    }
+    public void deleteAll(){
+        contactAPI.deleteAll();
     }
 
     public void reload(){
-//             chatsAPI.get();
-
+         contactAPI.get();
     }
 
 

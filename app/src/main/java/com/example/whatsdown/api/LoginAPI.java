@@ -1,12 +1,9 @@
 package com.example.whatsdown.api;
 
-import android.util.Log;
+import com.example.whatsdown.objects.CurrentUser;
+import com.example.whatsdown.objects.FirebaseToken;
+import com.example.whatsdown.objects.UserDits;
 
-import com.example.whatsdown.CurrentUser;
-import com.example.whatsdown.UserDits;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,18 +25,9 @@ public class LoginAPI {
     }
 
     public LoginAPI() {
-        // FOR DEBUGGING*****************************************************
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-        // TILL HERE*************************************************************
-
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/api/")
+                .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)// FOR DEBUGGING********************************************************
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
@@ -66,23 +54,47 @@ public class LoginAPI {
     }
 
     public void get(String username, String tokenToSend, PostCallback callback) {
-        Call<CurrentUser> call = webServiceAPI.getCurrentUser(username, tokenToSend);
-        call.enqueue(new Callback<CurrentUser>() {
-            @Override
-            public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
-                if(response.code() == 200) {
-                    curUser = response.body();
-                    callback.onPostComplete(true);
-                } else {
+        if (username != null) {
+            Call<CurrentUser> call = webServiceAPI.getCurrentUser(username, tokenToSend);
+            call.enqueue(new Callback<CurrentUser>() {
+                @Override
+                public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
+                    if(response.code() == 200) {
+                        curUser = response.body();
+                        callback.onPostComplete(true);
+                    } else {
+                        callback.onPostComplete(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CurrentUser> call, Throwable t) {
+                    t.printStackTrace();
                     callback.onPostComplete(false);
                 }
-            }
+            });
+        }
+    }
 
-            @Override
-            public void onFailure(Call<CurrentUser> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+    public void sentFirebaseToken(String username, FirebaseToken firebaseToken, String userToken, PostCallback callback) {
+        if (username != null) {
+            Call<Void> call = webServiceAPI.sendFirebaseToken(username, userToken, firebaseToken);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if(response.code() == 200) {
+                        callback.onPostComplete(true);
+                    } else {
+                        callback.onPostComplete(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                    callback.onPostComplete(false);
+                }
+            });
+        }
     }
 }

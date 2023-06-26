@@ -3,61 +3,50 @@ package com.example.whatsdown.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.whatsdown.ChatViewModel;
-import com.example.whatsdown.Message;
-import com.example.whatsdown.Msg;
+import com.example.whatsdown.Dao.ContactDao;
+import com.example.whatsdown.Dao.LocalDatabase;
+import com.example.whatsdown.Dao.MessageDao;
+import com.example.whatsdown.objects.Message;
+import com.example.whatsdown.objects.Msg;
 import com.example.whatsdown.api.ChatsAPI;
-import com.example.whatsdown.api.LoginAPI;
-import com.example.whatsdown.api.PostCallback;
+import com.example.whatsdown.view_model.ChatViewModel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class MessageRepository {
 
-    private MessageRepository.MessageListData messageListData;
-    //private ContactDao contactDao;
+    private MessageListData messageListData;
+    private MessageDao messageDao;
+    private ContactDao contactDao;
     private ChatsAPI chatsAPI;
-    List<Message> messages;
-
 
     public MessageRepository(){
-        //LocalDatabase db = LocalDatabase.getInstance();
-        //messageDao = db.messageDao();
-        messageListData = new MessageRepository.MessageListData();
-        //messageAPI = new MessageAPI(messageListData, messageDao);
+        LocalDatabase db = LocalDatabase.getInstance();
+        messageDao = db.messageDao();
+        contactDao = db.contactDao();
+        messageListData = new MessageListData();
+        chatsAPI = new ChatsAPI(messageListData, messageDao, contactDao);
     }
 
 
 
     class MessageListData extends MutableLiveData<List<Message>> {
         public MessageListData() {
-            //super();
-            messages = new LinkedList<>();
-            chatsAPI = new ChatsAPI();
-            chatsAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new PostCallback() {
-                @Override
-                public void onPostComplete(boolean registered) {
-                    if (registered) {
-                        messages = chatsAPI.getMessageList();
-                        setValue(messages);
-                    } else {
-                        //Error
-                    }
-                }
-            });
-
-
+            super();
+            new Thread(()->{
+                List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
+                messageListData.postValue(lst);
+                chatsAPI.getMessages();
+            }).start();
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-
-            /*new Thread(()->{
-                messageListData.messageValue(messageDao.get());
+            new Thread(()->{
+                List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
+                messageListData.postValue(lst);
             }).start();
-             */
         }
     }
 
@@ -65,35 +54,15 @@ public class MessageRepository {
         return messageListData;
     }
 
-    public void add(final Message message){
-        chatsAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new Msg(message.getContent()), new PostCallback() {
-            @Override
-            public void onPostComplete(boolean registered) {
-                if (registered) {
-
-                } else {
-                    //Error
-
-                }
-            }
-        });
+    public void add(final String message){
+        chatsAPI.sendMessage(new Msg(message));
     }
 
-    public void delete(final Message message){
-        //ChatsAPI.delete(message);
+    public void deleteAll(){
+        chatsAPI.deleteAll();
     }
 
     public void reload(){
-        chatsAPI.getMessages(ChatViewModel.getChatIdString(), LoginAPI.getToken(), new PostCallback() {
-            @Override
-            public void onPostComplete(boolean registered) {
-                if (registered) {
-                    messages = chatsAPI.getMessageList();
-                } else {
-                    //Error
-
-                }
-            }
-        });
+        chatsAPI.getMessages();
     }
 }
