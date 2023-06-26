@@ -15,14 +15,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.whatsdown.Dao.LocalDatabase;
 import com.example.whatsdown.chat.ChatViewActivity;
 import com.example.whatsdown.contact.ContactListActivity;
 
+import com.example.whatsdown.login.MainActivity;
+import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.List;
 
 
 public class PushNotifications extends FirebaseMessagingService {
@@ -70,6 +75,12 @@ public class PushNotifications extends FirebaseMessagingService {
                         ContactViewModel.getIdsChatRepository().reload();
                     }
                     if (ChatViewActivity.getMessageViewModel() != null && ChatViewModel.getChatIdString() != null) {
+                        List<Message> lst = LocalDatabase.getInstance(MainActivity.getMainActivity()).messageDao().index();
+                        for (Message message : lst) {
+                            if (message.getSender().getUsername().equals(messageReceived) && message.getMessageOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())) {
+                                LocalDatabase.getInstance(MainActivity.getMainActivity()).messageDao().delete(message);
+                            }
+                        }
                         ChatViewActivity.getMessageViewModel().reload();
                     }
                     if (ChatViewModel.getCurrentUser() != null && messageReceived.equals(ChatViewModel.getCurrentUser().getUsername())) {

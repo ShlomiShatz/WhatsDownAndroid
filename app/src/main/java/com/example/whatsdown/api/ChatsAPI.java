@@ -51,9 +51,9 @@ public class ChatsAPI {
                             msg.setChatId(ChatViewModel.getChatIdString());
                             msg.setMessageOfUser(chatOfUser);
                         }
-                        listMessages.postValue(lst);
                         new Thread(() -> {
                             messageDao.insertListReplace(lst);
+                            listMessages.postValue(lst);
                         }).start();
                     }
                 }
