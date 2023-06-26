@@ -44,8 +44,8 @@ public class SettingActivity extends AppCompatActivity {
                 ServerPath.setPath(port);
                 sharedPreferences.edit().putString("path", port).apply();
                 new Thread(() -> {
-                    LocalDatabase.getInstance().contactDao().deleteAll();
-                    LocalDatabase.getInstance().messageDao().deleteAll();
+                    LocalDatabase.getInstance(MainActivity.getMainActivity()).contactDao().deleteAll();
+                    LocalDatabase.getInstance(MainActivity.getMainActivity()).messageDao().deleteAll();
                 }).start();
 
             }

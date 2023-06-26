@@ -14,6 +14,9 @@ import java.util.List;
 @Dao
 public interface MessageDao {
 
+    @Query("SELECT * FROM message")
+    List<Message> index();
+
     @Query("SELECT * FROM message WHERE chatId = :id")
     List<Message> get(String id);
 
@@ -27,7 +30,7 @@ public interface MessageDao {
     void update(Message... messages);
 
     @Delete
-    void delete(Message... messages);
+    void delete(Message message);
 
     @Query("DELETE FROM message WHERE chatId = :id")
     void deleteByChatId(String id);

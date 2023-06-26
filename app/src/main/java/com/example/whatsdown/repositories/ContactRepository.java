@@ -12,11 +12,13 @@ import com.example.whatsdown.contact.Contact;
 
 import com.example.whatsdown.api.PostCallback;
 
+import com.example.whatsdown.login.MainActivity;
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
 
 import java.util.ArrayList;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ContactRepository {
@@ -25,15 +27,20 @@ public class ContactRepository {
     private MessageDao messageDao;
     private ContactAPI contactAPI;
     public ContactRepository(){
-        LocalDatabase db = LocalDatabase.getInstance();
+        LocalDatabase db = LocalDatabase.getInstance(MainActivity.getMainActivity());
         contactDao = db.contactDao();
         messageDao = db.messageDao();
         contactListData = new ContactListData();
         contactAPI = new ContactAPI(contactListData, contactDao, messageDao);
+        contactListData.setList();
     }
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             super();
+            postValue(new LinkedList<Contact>());
+        }
+
+        public void setList() {
             new Thread(()->{
                 getContactsFromRoom();
                 contactAPI.get();
@@ -100,8 +107,4 @@ public class ContactRepository {
     public void reload(){
          contactAPI.get();
     }
-
-
-
-
 }

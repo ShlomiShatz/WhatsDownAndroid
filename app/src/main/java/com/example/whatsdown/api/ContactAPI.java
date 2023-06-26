@@ -11,6 +11,7 @@ import com.example.whatsdown.objects.Username;
 import com.example.whatsdown.view_model.ChatViewModel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,18 +51,22 @@ public class ContactAPI {
                         ChatOfUser chatOfUser = new ChatOfUser(ChatViewModel.getLoginUser().getUsername(), contact.getId());
                         contact.setChatOfUser(chatOfUser);
                     }
-                    listContact.postValue(list);
                     new Thread(()->{
+                        if (listContact.getValue() != null) {
+                            List<Contact> lst = listContact.getValue();
+                            for (Contact contact: lst) {
+                                contactDao.delete(contact);
+                            }
+                        }
                         contactDao.insertListReplace(list);
+                        listContact.postValue(list);
                     }).start();
-                } else {
-                    listContact.postValue(new ArrayList<>());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
-                //what to do
+
             }
         });
     }
@@ -103,10 +108,10 @@ public class ContactAPI {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if(response.code() == 200) {
                         new Thread(()->{
-                            contactDao.deleteById(chatId);
+                            messageDao.deleteByChatId(chatId);
                         }).start();
                         new Thread(()->{
-                            messageDao.deleteByChatId(chatId);
+                            contactDao.deleteById(chatId);
                         }).start();
                     }
                 }

@@ -15,6 +15,7 @@ import java.util.Date;
 public class Message {
     @PrimaryKey()
     @NonNull
+    private ChatOfUser messageOfUser;
     private String id;
     private String chatId;
     private CurrentUser sender;
@@ -27,6 +28,16 @@ public class Message {
         this.created = created;
         this.chatId = chatId;
     }
+
+    @NonNull
+    public ChatOfUser getMessageOfUser() {
+        return messageOfUser;
+    }
+
+    public void setMessageOfUser(@NonNull ChatOfUser messageOfUser) {
+        this.messageOfUser = messageOfUser;
+    }
+
     public CurrentUser getSender() { return sender; }
     public String getContent() { return content; }
 

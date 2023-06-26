@@ -37,7 +37,7 @@ public interface ContactDao {
     void update(Contact... contacts);
 
     @Delete
-    void delete(Contact... contacts);
+    void delete(Contact contact);
 
     @Query("DELETE FROM contact WHERE id = :id")
     void deleteById(String id);

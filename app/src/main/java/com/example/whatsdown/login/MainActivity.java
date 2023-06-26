@@ -15,11 +15,13 @@ import com.example.whatsdown.api.ServerPath;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LocalDatabase.setContext(this);
+        mainActivity = this;
 
         SharedPreferences sharedPreferences;
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
@@ -38,5 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(i);
         });
+    }
+
+    public static MainActivity getMainActivity() {
+        return mainActivity;
     }
 }

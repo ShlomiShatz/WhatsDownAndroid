@@ -19,7 +19,7 @@ To register, enter all the details:
 - Password: Must be at least 8 characters long, and contain at least one of these each specifications: *lower case letter, higher case letter, number and at least one of these symbols: .!@#$*  
 - Password Verification: Must be the same as the password entered previously.  
 - Display name: The name you will have in the chat.
-- Profile image: You are required to provide a valid profile picture, which is of one of these file types: *jpeg/jpg/gif/png*.
+- Profile image: You are required to provide a valid profile picture, which is of one of these file types: *jpeg/jpg/gif/png*. **Must be up to 2MB size max!**  
 Note that if you will not fill all of the necessary details you will not be able to register.  
 **After successful registeration, you will be redirected to the login page without any notice, and you will be able to login using the details you registered with.**  
 ### Chatting Page
@@ -28,7 +28,7 @@ The chatting area devides into two parts:
 - The right side shows the chat itself, you can write messages to your contact and see what they write back. There is also a **delete** button that will delete the contact and all the messages between.  
 On the right top side there is a Log Out button, it will redirect you to the login page.  
 ## Running the app - Smartphone
-After running the server, install the app on your Android smartphone using Android Studio or a simiar software. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page. Note that you will be asked for post-notification permissions. For the full app experience - please allow it.  
+Note - Android API must be 33 and above in order for the app to run. Now, After running the server, install the app on your Android smartphone using Android Studio or a simiar software. Make sure to sync the gradle files before running the project. After running it, the openning screen will show up. To start the app, click the **Start** button and you will be moved to the login page. Note that you will be asked for post-notification permissions. For the full app experience - please allow it.  
 ### Login Page
 To login, enter your username and password and press the login button. If both are correct, you will be redirected to the chatting page.  
 If either of those are wrong, you will be notified. If you are not registered, click on the link on the bottom to register.  
@@ -44,7 +44,7 @@ To register, enter all the details:
 - Password: Must be at least 8 characters long, and contain at least one of these each specifications: *lower case letter, higher case letter, number and at least one of these symbols: .!@#$*  
 - Password Verification: Must be the same as the password entered previously.  
 - Display name: The name you will have in the chat.
-- Profile image: You are required to provide a valid profile picture, which is of one of these file types: *jpeg/jpg/gif/png*.
+- Profile image: You are required to provide a valid profile picture, which is of one of these file types: *jpeg/jpg/gif/png*. **Must be up to 2MB size max!**  
 Note that if you will not fill all of the necessary details you will not be able to register.  
 **After successful registeration, you will be notified properly and you will be redirected to the login page. You will be able to login using the details you registered with.**  
 ### Chatting Page
