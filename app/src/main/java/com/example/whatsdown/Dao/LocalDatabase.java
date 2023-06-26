@@ -10,7 +10,7 @@ import com.example.whatsdown.contact.Contact;
 import com.example.whatsdown.objects.Message;
 
 
-@Database(entities = {Contact.class, Message.class}, version = 3)
+@Database(entities = {Contact.class, Message.class}, version = 4)
 public abstract class LocalDatabase extends RoomDatabase {
 
     private static LocalDatabase instance;

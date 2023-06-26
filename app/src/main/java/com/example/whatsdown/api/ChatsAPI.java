@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.whatsdown.Dao.ContactDao;
 import com.example.whatsdown.Dao.MessageDao;
+import com.example.whatsdown.objects.ChatOfUser;
 import com.example.whatsdown.objects.LastMessage;
 import com.example.whatsdown.objects.Message;
 import com.example.whatsdown.objects.Msg;
@@ -46,22 +47,20 @@ public class ChatsAPI {
                     if (response.code() == 200) {
                         List<Message> lst = response.body();
                         for (Message msg : lst) {
+                            ChatOfUser chatOfUser = new ChatOfUser( ChatViewModel.getLoginUser().getUsername(),msg.getId());
                             msg.setChatId(ChatViewModel.getChatIdString());
+                            msg.setMessageOfUser(chatOfUser);
                         }
                         listMessages.postValue(lst);
                         new Thread(() -> {
                             messageDao.insertListReplace(lst);
                         }).start();
-
-                    } else {
-                        listMessages.postValue(new LinkedList<Message>());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Message>> call, Throwable t) {
                     t.printStackTrace();
-                    listMessages.postValue(new LinkedList<Message>());
                 }
             });
         }
@@ -79,6 +78,8 @@ public class ChatsAPI {
                         LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
                         String stringLstMsg = new Gson().toJson(lstMsg);
                         List<Message> lstMessages = listMessages.getValue();
+                        ChatOfUser chatOfUser = new ChatOfUser( ChatViewModel.getLoginUser().getUsername(),newMsg.getId());
+                        newMsg.setMessageOfUser(chatOfUser);
                         lstMessages.add(newMsg);
                         listMessages.postValue(lstMessages);
                         new Thread(()->{
