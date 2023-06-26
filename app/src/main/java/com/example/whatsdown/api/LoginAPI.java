@@ -4,8 +4,6 @@ import com.example.whatsdown.objects.CurrentUser;
 import com.example.whatsdown.objects.FirebaseToken;
 import com.example.whatsdown.objects.UserDits;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,18 +25,9 @@ public class LoginAPI {
     }
 
     public LoginAPI() {
-        // FOR DEBUGGING*****************************************************
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-        // TILL HERE*************************************************************
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)// FOR DEBUGGING********************************************************
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }

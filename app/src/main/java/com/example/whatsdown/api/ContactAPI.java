@@ -13,8 +13,6 @@ import com.example.whatsdown.view_model.ChatViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,20 +29,12 @@ public class ContactAPI {
     MutableLiveData<List<Contact>> listContact;
 
     public ContactAPI(MutableLiveData<List<Contact>> listContacts, ContactDao cDao, MessageDao mDao) {
-        // FOR DEBUGGING*****************************************************
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-        // TILL HERE*************************************************************
         this.listContact = listContacts;
         this.contactDao = cDao;
         this.messageDao = mDao;
         retrofit = new Retrofit.Builder()
                 .baseUrl(ServerPath.getPath())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)// FOR DEBUGGING********************************************************
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
@@ -75,8 +65,7 @@ public class ContactAPI {
             }
         });
     }
-    public void
-    add(String username, PostCallback callback) {
+    public void add(String username, PostCallback callback) {
         Username userNameObj = new Username(username);
         Call<Contact> call = webServiceAPI.addContact(LoginAPI.getToken(), userNameObj);
         call.enqueue(new Callback<Contact>() {

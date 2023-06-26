@@ -1,5 +1,7 @@
 package com.example.whatsdown.repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -36,11 +38,6 @@ public class MessageRepository {
             new Thread(()->{
                 List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
                 messageListData.postValue(lst);
-                try {
-                    Thread.sleep(10000);
-                }catch (Exception e){
-
-                }
                 chatsAPI.getMessages();
             }).start();
         }
