@@ -13,7 +13,7 @@ import { init } from './services/firebase.js'
 var app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: '2mb' }));
 app.use(express.json());
 app.use(express.static('public'));
 const server = http.createServer(app);
