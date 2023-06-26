@@ -37,7 +37,7 @@ public class ChatViewActivity extends AppCompatActivity {
             finish();
         });
         RecyclerView listMessages = findViewById(R.id.allMsg_activity);
-        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this,viewModel.getCurrentUser().getDisplayName());
+        final MessagesListAdapter messagesListAdapter = new MessagesListAdapter(this,viewModel.getCurrentUser(), ChatViewModel.getLoginUser());
         listMessages.setAdapter(messagesListAdapter);
         listMessages.setLayoutManager(new LinearLayoutManager(this));
 
