@@ -19,7 +19,9 @@ const createChat = async (creator, user) => {
 };
 
 const getChatById = async (id) => {
-    if (!Chat.findById(id)) return null;
+    if (!id || id === "Messages" || id === "") return null;
+    const isExists = await Chat.findById(id);
+    if (!isExists) return null;
     const result = await Chat.findById(id).populate('users').populate('messages').populate({
         path: 'messages',
         populate: {
