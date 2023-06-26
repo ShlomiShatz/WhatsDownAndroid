@@ -28,7 +28,6 @@ public class ContactViewModel extends ViewModel {
 
     public void setToken(String token) {
         this.token = token;
-        idsChatRepository.setToken(token);
     }
 
     public LiveData<List<Contact>> get() {return contacts;}

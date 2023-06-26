@@ -1,5 +1,6 @@
 package com.example.whatsdown.repositories;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -8,10 +9,13 @@ import com.example.whatsdown.Dao.LocalDatabase;
 import com.example.whatsdown.Dao.MessageDao;
 import com.example.whatsdown.api.ContactAPI;
 import com.example.whatsdown.contact.Contact;
-import com.example.whatsdown.api.LoginAPI;
+
 import com.example.whatsdown.api.PostCallback;
+
 import com.example.whatsdown.view_model.ChatViewModel;
 import com.example.whatsdown.view_model.ContactViewModel;
+
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -19,38 +23,38 @@ public class ContactRepository {
     private ContactListData contactListData;
     private ContactDao contactDao;
     private MessageDao messageDao;
-    private List<Contact> list;
-    private ContactListData contactListDataListData;
     private ContactAPI contactAPI;
-    private String token;
-
     public ContactRepository(){
         LocalDatabase db = LocalDatabase.getInstance();
         contactDao = db.contactDao();
         messageDao = db.messageDao();
-        token = LoginAPI.getToken();
         contactListData = new ContactListData();
         contactAPI = new ContactAPI(contactListData, contactDao, messageDao);
     }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             super();
             new Thread(()->{
-                contactListData.postValue(contactDao.get(ChatViewModel.getChatIdString()));
+                getContactsFromRoom();
+                contactAPI.get();
             }).start();
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-
             contactAPI.get();
+        }
+
+        protected void getContactsFromRoom(){
+            List<Contact> lst = contactDao.index();
+            List<Contact> newLst = new ArrayList<>();
+            for (Contact contact:lst) {
+                if (contact.getChatOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())){
+                    newLst.add(contact);
+                }
+            }
+            postValue(newLst);
         }
     }
 

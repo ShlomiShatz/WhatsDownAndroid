@@ -34,9 +34,15 @@ public class MessageRepository {
         public MessageListData() {
             super();
             new Thread(()->{
-                messageListData.postValue(messageDao.get(ChatViewModel.getChatIdString()));
+                List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
+                messageListData.postValue(lst);
+                try {
+                    Thread.sleep(10000);
+                }catch (Exception e){
+
+                }
+                chatsAPI.getMessages();
             }).start();
-//            chatsAPI.getMessages();
         }
 
         @Override

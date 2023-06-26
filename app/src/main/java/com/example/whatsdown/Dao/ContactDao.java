@@ -20,7 +20,7 @@ public interface ContactDao {
     @Query("SELECT * FROM contact WHERE id = :id")
     List<Contact> get(String id);
 
-    @Query("SELECT * FROM contact WHERE user = :username")
+    @Query("SELECT * FROM contact WHERE chatOfUser = :username")
     List<Contact> getByUserName(String username);
 
 

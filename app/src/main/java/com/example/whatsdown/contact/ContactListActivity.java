@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -69,6 +70,11 @@ public class ContactListActivity extends AppCompatActivity implements PopupMenu.
         listContacts.setLayoutManager(new LinearLayoutManager(this));
         contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         contactViewModel.get().observe(this , contacts -> adapter.setContacts(contacts));
+
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.refreshLayout_activity);
+        refreshLayout.setOnRefreshListener(()->{
+            contactViewModel.reload();
+         });
 
     }
     @Override
