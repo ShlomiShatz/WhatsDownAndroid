@@ -40,7 +40,13 @@ public class MessageRepository {
         public void setList(){
             new Thread(()->{
                 List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
-                messageListData.postValue(lst);
+                List<Message> newLst = new LinkedList<>();
+                for (Message messageElement: lst) {
+                    if (messageElement.getMessageOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())) {
+                        newLst.add(messageElement);
+                    }
+                }
+                messageListData.postValue(newLst);
                 chatsAPI.getMessages();
             }).start();
         }
@@ -51,6 +57,13 @@ public class MessageRepository {
             new Thread(()->{
                 List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
                 messageListData.postValue(lst);
+                List<Message> newLst = new LinkedList<>();
+                for (Message messageElement: lst) {
+                    if (messageElement.getMessageOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())) {
+                        newLst.add(messageElement);
+                    }
+                }
+                messageListData.postValue(newLst);
             }).start();
         }
     }

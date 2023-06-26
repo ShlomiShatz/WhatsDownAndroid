@@ -47,7 +47,7 @@ public class ChatsAPI {
                     if (response.code() == 200) {
                         List<Message> lst = response.body();
                         for (Message msg : lst) {
-                            ChatOfUser chatOfUser = new ChatOfUser( ChatViewModel.getLoginUser().getUsername(),msg.getId());
+                            ChatOfUser chatOfUser = new ChatOfUser(ChatViewModel.getLoginUser().getUsername(),msg.getId());
                             msg.setChatId(ChatViewModel.getChatIdString());
                             msg.setMessageOfUser(chatOfUser);
                         }
