@@ -64,6 +64,10 @@ const deleteChat = async (req, res) => {
     } 
     const username = await loginService.getUsernameFromToken(req.headers.authorization.split(" ")[1]);
     const getChatId = await chatService.getChatById(req.params.id);
+    if (!getChatId) {
+        return res.status(404).json({error: ['chat not found']});
+    }
+    const idForChat = req.param.id;
     const users = getChatId.users;
     const user1 = await users[0].username;
     const user2 = await users[1].username;
@@ -90,6 +94,9 @@ const addMessage = async (req, res) => {
     } 
     const username = loginService.getUsernameFromToken(req.headers.authorization.split(" ")[1]);
     const current_chat = await chatService.getChatById(req.params.id);
+    if(!current_chat){
+        return res.status(401).json({error: ['chat not found']});
+    }
     if(!current_chat.users?.filter((element) => element.username === username)){
         return res.status(401).json({error: ['no permissions']});
     }
@@ -128,6 +135,7 @@ const getAllMessages = async (req, res) => {
 const sendAMessageToFirebase = async (id, sender, content) => {
     socket.emit("message_sent");
     const users = await chatService.getUsersById(id);
+    if (!users) return null;
     if (users[0].username !== sender) {
         let fireToken = await userService.getFirebaseTokenByUsername(users[0].username);
         if (fireToken && fireToken !== "") {
@@ -165,8 +173,8 @@ const deleteContactFirebase = async (user1, user2, sender) => {
         if (fireToken1 && fireToken1 !== "") {
             const message = {
                 notification: {
-                    title: 'New What\'s Down message!',
-                    body: 'deleted stuff'
+                    title: 'Deleted chat',
+                    body: 'd' + sender
                 },
                 token: fireToken1
             };
@@ -176,8 +184,8 @@ const deleteContactFirebase = async (user1, user2, sender) => {
         if (fireToken2 && fireToken2 !== "") {
             const message = {
                 notification: {
-                    title: 'New What\'s Down message!',
-                    body: 'deleted stuff'
+                    title: 'Deleted chat',
+                    body: 'd' + sender
                 },
                 token: fireToken2
             };

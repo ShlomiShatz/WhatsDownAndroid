@@ -19,6 +19,7 @@ const createChat = async (creator, user) => {
 };
 
 const getChatById = async (id) => {
+    if (!Chat.findById(id)) return null;
     const result = await Chat.findById(id).populate('users').populate('messages').populate({
         path: 'messages',
         populate: {
@@ -30,6 +31,7 @@ const getChatById = async (id) => {
 
 const getUsersById = async (id) => {
     const result = await getChatById(id);
+    if (!result) return null;
     return result.users;
 }
 
