@@ -43,7 +43,9 @@ public class ContactRepository {
         @Override
         protected void onActive() {
             super.onActive();
-            contactAPI.get();
+            new Thread(()->{
+                getContactsFromRoom();
+            }).start();
         }
 
         protected void getContactsFromRoom(){
@@ -67,6 +69,15 @@ public class ContactRepository {
     }
 
     public void add(String username, ContactViewModel.AddContactCallback callback) {
+        List<Contact> lst = getAll().getValue();
+        for (Contact contactElement:lst) {
+            if (contactElement.getChatOfUser().getUser().equals(ChatViewModel.getLoginUser().getUsername())){
+                if(contactElement.getUser().getUsername().equals(username)) {
+                    callback.onContactAdded(false);
+                    return;
+                }
+            }
+        }
         contactAPI.add(username, new PostCallback() {
             @Override
             public void onPostComplete(boolean registered) {
@@ -78,7 +89,6 @@ public class ContactRepository {
             }
         });
     }
-
 
     public void delete(final Contact contact){
         contactAPI.delete(contact.getId());

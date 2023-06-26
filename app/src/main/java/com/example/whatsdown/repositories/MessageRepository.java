@@ -43,7 +43,10 @@ public class MessageRepository {
         @Override
         protected void onActive() {
             super.onActive();
-            chatsAPI.getMessages();
+            new Thread(()->{
+                List<Message> lst = messageDao.get(ChatViewModel.getChatIdString());
+                messageListData.postValue(lst);
+            }).start();
         }
     }
 

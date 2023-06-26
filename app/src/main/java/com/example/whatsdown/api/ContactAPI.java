@@ -81,7 +81,6 @@ public class ContactAPI {
                     new Thread(()->{
                         contactDao.insertReplace(contact);
                     }).start();
-
                     callback.onPostComplete(true);
                 } else {
                     callback.onPostComplete(false);

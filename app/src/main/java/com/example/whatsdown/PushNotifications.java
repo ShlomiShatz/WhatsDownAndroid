@@ -72,7 +72,7 @@ public class PushNotifications extends FirebaseMessagingService {
                     if (ChatViewActivity.getMessageViewModel() != null && ChatViewModel.getChatIdString() != null) {
                         ChatViewActivity.getMessageViewModel().reload();
                     }
-                    if (messageReceived.equals(ChatViewModel.getCurrentUser().getUsername())) {
+                    if (ChatViewModel.getCurrentUser() != null && messageReceived.equals(ChatViewModel.getCurrentUser().getUsername())) {
                         ChatViewActivity.getActivity().finish();
                     }
                     break;

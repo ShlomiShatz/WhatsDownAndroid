@@ -34,7 +34,7 @@ public class AddContactActivity extends AppCompatActivity {
                                 Toast.makeText(AddContactActivity.this, "User added successfully!", Toast.LENGTH_LONG).show();
                                 text.setError(null);
                             } else {
-                                text.setError("Invalid username.");
+                                text.setError("Invalid username or already added.");
                             }
                         });
                     }
