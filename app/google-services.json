@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "20002447297",
+    "project_id": "whatsdown-8bb2f",
+    "storage_bucket": "whatsdown-8bb2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20002447297:android:a43b878d36e16328289940",
+        "android_client_info": {
+          "package_name": "com.example.whatsdown"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20002447297-t5i66krsl9n8vaph7moikf07aahl12uc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARUo5Wn8FYD2hITe6sEA8nX0L5HsyIs_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20002447297-t5i66krsl9n8vaph7moikf07aahl12uc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
