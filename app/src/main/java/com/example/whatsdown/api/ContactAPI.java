@@ -97,42 +97,45 @@ public class ContactAPI {
     }
 
     public void delete(String chatId){
-        Call<Void> call = webServiceAPI.deleteContact(chatId, LoginAPI.getToken());
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 200) {
-                    new Thread(()->{
-                        contactDao.deleteById(chatId);
-                    }).start();
-                    new Thread(()->{
-                        messageDao.deleteByChatId(chatId);
-                    }).start();
+        if (chatId != null) {
+            Call<Void> call = webServiceAPI.deleteContact(chatId, LoginAPI.getToken());
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if(response.code() == 200) {
+                        new Thread(()->{
+                            contactDao.deleteById(chatId);
+                        }).start();
+                        new Thread(()->{
+                            messageDao.deleteByChatId(chatId);
+                        }).start();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     public void deleteFirebase() {
-        Call<Void> call = webServiceAPI.sendFirebaseToken(ChatViewModel.getLoginUser().getUsername(), LoginAPI.getToken(), new FirebaseToken(""));
+        if (ChatViewModel.getLoginUser().getUsername() != null) {
+            Call<Void> call = webServiceAPI.sendFirebaseToken(ChatViewModel.getLoginUser().getUsername(), LoginAPI.getToken(), new FirebaseToken(""));
 
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     public void deleteAll() {

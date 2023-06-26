@@ -54,43 +54,47 @@ public class LoginAPI {
     }
 
     public void get(String username, String tokenToSend, PostCallback callback) {
-        Call<CurrentUser> call = webServiceAPI.getCurrentUser(username, tokenToSend);
-        call.enqueue(new Callback<CurrentUser>() {
-            @Override
-            public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
-                if(response.code() == 200) {
-                    curUser = response.body();
-                    callback.onPostComplete(true);
-                } else {
+        if (username != null) {
+            Call<CurrentUser> call = webServiceAPI.getCurrentUser(username, tokenToSend);
+            call.enqueue(new Callback<CurrentUser>() {
+                @Override
+                public void onResponse(Call<CurrentUser> call, Response<CurrentUser> response) {
+                    if(response.code() == 200) {
+                        curUser = response.body();
+                        callback.onPostComplete(true);
+                    } else {
+                        callback.onPostComplete(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CurrentUser> call, Throwable t) {
+                    t.printStackTrace();
                     callback.onPostComplete(false);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<CurrentUser> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+            });
+        }
     }
 
     public void sentFirebaseToken(String username, FirebaseToken firebaseToken, String userToken, PostCallback callback) {
-        Call<Void> call = webServiceAPI.sendFirebaseToken(username, userToken, firebaseToken);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 200) {
-                    callback.onPostComplete(true);
-                } else {
+        if (username != null) {
+            Call<Void> call = webServiceAPI.sendFirebaseToken(username, userToken, firebaseToken);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if(response.code() == 200) {
+                        callback.onPostComplete(true);
+                    } else {
+                        callback.onPostComplete(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
                     callback.onPostComplete(false);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                t.printStackTrace();
-                callback.onPostComplete(false);
-            }
-        });
+            });
+        }
     }
 }

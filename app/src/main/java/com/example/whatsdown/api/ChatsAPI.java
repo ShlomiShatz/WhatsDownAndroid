@@ -68,32 +68,34 @@ public class ChatsAPI {
     }
 
     public void sendMessage(Msg msg) {
-        Call<Message> call = webServiceAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), msg);
-        call.enqueue(new Callback<Message>() {
-            @Override
-            public void onResponse(Call<Message> call, Response<Message> response) {
-                if(response.code() == 200) {
-                    Message newMsg = response.body();
-                    newMsg.setChatId(ChatViewModel.getChatIdString());
-                    LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
-                    String stringLstMsg = new Gson().toJson(lstMsg);
-                    List<Message> lstMessages = listMessages.getValue();
-                    lstMessages.add(newMsg);
-                    listMessages.postValue(lstMessages);
-                    new Thread(()->{
-                        messageDao.insert(newMsg);
-                    }).start();
-                    new Thread(()->{
-                        contactDao.updateLastMessage(stringLstMsg, ChatViewModel.getChatIdString());
-                    }).start();
+        if (ChatViewModel.getChatIdString() != null) {
+            Call<Message> call = webServiceAPI.sendMessage(ChatViewModel.getChatIdString(), LoginAPI.getToken(), msg);
+            call.enqueue(new Callback<Message>() {
+                @Override
+                public void onResponse(Call<Message> call, Response<Message> response) {
+                    if(response.code() == 200) {
+                        Message newMsg = response.body();
+                        newMsg.setChatId(ChatViewModel.getChatIdString());
+                        LastMessage lstMsg = new LastMessage(newMsg.getId(), newMsg.getCreated(), newMsg.getContent());
+                        String stringLstMsg = new Gson().toJson(lstMsg);
+                        List<Message> lstMessages = listMessages.getValue();
+                        lstMessages.add(newMsg);
+                        listMessages.postValue(lstMessages);
+                        new Thread(()->{
+                            messageDao.insert(newMsg);
+                        }).start();
+                        new Thread(()->{
+                            contactDao.updateLastMessage(stringLstMsg, ChatViewModel.getChatIdString());
+                        }).start();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Message> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<Message> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     public void deleteAll() {
